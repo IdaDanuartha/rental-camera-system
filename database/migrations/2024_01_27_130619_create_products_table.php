@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\DeviceSeries;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(DeviceSeries::class)
+                  ->constrained()
+                  ->cascadeOnUpdate()
+                  ->nullOnDelete();
+            $table->string('name');
+            $table->integer('rental_price');
+            $table->integer('stock');
+            $table->text('description');
             $table->timestamps();
         });
     }
