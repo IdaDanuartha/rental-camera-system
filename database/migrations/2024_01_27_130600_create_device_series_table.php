@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(DeviceBrand::class)
                     ->constrained()
                     ->cascadeOnUpdate()
-                    ->nullOnDelete();
+                    ->cascadeOnDelete();
             $table->string('name');
             $table->timestamps();
         });

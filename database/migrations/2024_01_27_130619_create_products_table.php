@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(DeviceSeries::class)
                   ->constrained()
                   ->cascadeOnUpdate()
-                  ->nullOnDelete();
+                  ->cascadeOnDelete();
             $table->string('name');
             $table->integer('rental_price');
             $table->integer('stock');
