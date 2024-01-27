@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum UserStatus: int
 {
-	case ACTIVE = 1;
-	case NONACTIVE = 2;
+	case ACTIVE = 0;
+	case NONACTIVE = 1;
 
 	public function label()
 	{
