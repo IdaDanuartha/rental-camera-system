@@ -40,6 +40,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'password' => 'hashed',
+        'role' => Role::class,
+        'status' => UserStatus::class
     ];
 
     // protected static function boot(): void
