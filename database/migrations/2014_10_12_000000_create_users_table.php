@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();            
             $table->string('password');
-            $table->smallInteger('role')->comment('[1: Admin, 2: Staff, 3: Customer]');
+            $table->smallInteger('role')->comment('[0: Admin, 1: Staff, 2: Customer]')->default(2);
             $table->boolean('status')->default(1);
             $table->morphs('authenticatable');
             $table->rememberToken();
