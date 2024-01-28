@@ -2835,7 +2835,7 @@ fieldset:disabled .btn {
   }
 }
 .fade:not(.show) {
-  opacity: 0;
+  display: none;
 }
 
 .collapse:not(.show) {

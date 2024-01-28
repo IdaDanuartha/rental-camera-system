@@ -135,18 +135,22 @@
 }
 
 .select2.select2-container .select2-selection {
-  border: 1px solid #ccc;
+  border: 1px solid #2824211F;
+	background:#F5F6FB;
+	width: 100%;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 5px;
   height: 100%;
-  padding: 8px 10px;  
+  padding: 1rem;
+
+	color: #282421B8;
   outline: none !important;
-  transition: all .15s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 .select2.select2-container .select2-selection .select2-selection__rendered {
-  color: #333;
+  color: #282421B8 !important;
   line-height: 20px;
   padding-right: 33px;
 }
@@ -159,6 +163,7 @@
   border-radius: 0 3px 3px 0;
   height: 38px;
   width: 33px;
+	margin-top: 5px !important;
 }
 
 .select2.select2-container.select2-container--open .select2-selection.select2-selection--single {
@@ -231,6 +236,7 @@
 .select2-container .select2-dropdown .select2-search input {
   outline: none !important;
   border: 1px solid #34495e !important;
+	background: white;
   border-bottom: none !important;
   padding: 4px 6px !important;
 }
@@ -240,10 +246,82 @@
 }
 
 .select2-container .select2-dropdown .select2-results ul {
-  background: #fff;
+  background: #F5F6FB;
   border: 1px solid #34495e;
+	color: #282421B8;
 }
 
 .select2-container .select2-dropdown .select2-results ul .select2-results__option--highlighted[aria-selected] {
-  background-color: #3498db;
+  background-color: #5F84E9;
+}
+
+
+/* TOGGLE STYLE */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #5F84E9;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px  #5F84E9;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/* TOGGLE STYLE */
+
+#DataTables_Table_0_paginate span a.paginate_button.current{
+	color: white !important;
+	background: #5F84E9;
+}
+.table-responsive::-webkit-scrollbar{
+	opacity: 0 !important;
 }
