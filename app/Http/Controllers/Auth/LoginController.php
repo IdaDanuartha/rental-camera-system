@@ -20,7 +20,7 @@ class LoginController extends Controller
     public function authenticate(LoginRequest $request)
     {
         try {
-            $this->authRepository->login($request->only("email", "password"));
+            $this->authRepository->login($request->validated());
 
             return redirect()->route("dashboard.index")->with('success', 'Login success! Welcome back ' . auth()->user()->username);                    
         } catch (\Exception $e) {
