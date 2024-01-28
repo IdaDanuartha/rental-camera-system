@@ -8,6 +8,6 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        return view('admin.dashboard.index');
+        return view('dashboard.analytics.index');
     }
 }
