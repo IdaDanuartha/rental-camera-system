@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum Role: int
 {
-	case ADMIN = 0;
-	case STAFF = 1;
-	case CUSTOMER = 2;
+	case ADMIN = 1;
+	case STAFF = 2;
+	case CUSTOMER = 3;
 
 	public function label()
 	{
