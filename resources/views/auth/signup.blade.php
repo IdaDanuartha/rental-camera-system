@@ -4,7 +4,6 @@
 @section('main')
 <form id="formAuthentication" class="mb-3" action="{{ route('register') }}" method="POST">
   @csrf
-  <input type="hidden" name="authenticatable_id" value="3">
   <input type="hidden" name="authenticatable_type" value="App\Models\Customer">
   <div class="mb-3">
     <label for="username" class="form-label">Username</label>

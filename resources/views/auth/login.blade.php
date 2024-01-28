@@ -5,17 +5,17 @@
 <form id="formAuthentication" class="mb-3" action="{{ route('authenticate') }}" method="POST">
   @csrf
   <div class="mb-3">
-    <label for="email" class="form-label">Email</label>
+    <label for="username" class="form-label">Username</label>
     <input
       type="text"
       class="form-control"
-      id="email"
-      name="email"
-      placeholder="Enter your email"
+      id="username"
+      name="username"
+      placeholder="Enter your username"
       required
-      value="{{ old('email') }}"
+      value="{{ old('username') }}"
       autofocus />
-    @error('email')
+    @error('username')
       <div class="text-danger mt-1">{{ $message }}</div>
     @enderror
   </div>
