@@ -4,52 +4,52 @@ namespace App\Repositories;
 
 use App\Enums\Role;
 use App\Enums\UserStatus;
-use App\Models\Staff;
+use App\Models\Customer;
 use App\Utils\UploadFile;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class StaffRepository
+class CustomerRepository
 {
   public function __construct(
-    protected readonly Staff $staff,
+    protected readonly Customer $customer,
     protected readonly UploadFile $uploadFile
   ) {}
 
-  public function findAll(): Staff
+  public function findAll(): Collection
   {
-    return $this->staff->latest()->get();
+    return $this->customer->latest()->get();
   }
 
   public function findAllPaginate(): LengthAwarePaginator
   {
-    return $this->staff->latest()->with(['user'])->paginate(10);
+    return $this->customer->latest()->with(['user'])->paginate(10);
   }
 
-  public function findById(Staff $staff): Staff
+  public function findById(Customer $customer): Customer
   {
-    return $staff;
+    return $customer;
   }
 
-  public function store($request): Staff|Exception
+  public function store($request): Customer|Exception
   {
     DB::beginTransaction();
     try {  
       if ($request["profile_image"]) {         
-        $filename = $this->uploadFile->uploadSingleFile($request['profile_image'], "staff");
+        $filename = $this->uploadFile->uploadSingleFile($request['profile_image'], "customers");
         $request['profile_image'] = $filename;
       }  
 
-      $staff = $this->staff->create(Arr::only($request, ['name', 'phone_number', 'profile_image']));
-      $staff->user()->create([
+      $customer = $this->customer->create(Arr::only($request, ['name', 'phone_number', 'profile_image']));
+      $customer->user()->create([
         'username' => Arr::get($request, 'user.username'),
         'email' => Arr::get($request, 'user.email'),
         'password' => Arr::get($request, 'user.password'),
         'status' => Arr::has($request, 'user.status') ? UserStatus::ACTIVE : UserStatus::NONACTIVE,
-        'role' => Role::STAFF
+        'role' => Role::CUSTOMER
       ]);
     } catch (\Exception $e) {  
       logger($e->getMessage());
@@ -58,19 +58,19 @@ class StaffRepository
       return $e;
     }
     DB::commit();
-    return $staff;
+    return $customer;
   }
 
-  public function update($request, Staff $staff): bool
+  public function update($request, Customer $customer): bool
   {
     DB::beginTransaction();    
     try {  
       if (Arr::has($request, 'profile_image') && Arr::get($request, 'profile_image')) {
-        $this->uploadFile->deleteExistFile("staff/$staff->profile_image");
+        $this->uploadFile->deleteExistFile("customers/$customer->profile_image");
 
         $image = Arr::get($request, 'profile_image');
 
-        $filename = $this->uploadFile->uploadSingleFile($image, "staff");
+        $filename = $this->uploadFile->uploadSingleFile($image, "customers");
         $request['profile_image'] = $filename;
       }  
 
@@ -79,8 +79,8 @@ class StaffRepository
       
       if(is_null(Arr::get($request, 'user.password'))) Arr::pull($request, 'user.password');			
 
-      $staff->updateOrFail(Arr::only($request, ['name', 'phone_number', 'profile_image']));
-			$staff->user->updateOrFail(Arr::get($request, 'user'));
+      $customer->updateOrFail(Arr::only($request, ['name', 'phone_number', 'profile_image']));
+			$customer->user->updateOrFail(Arr::get($request, 'user'));
 
       DB::commit();
       return true;
@@ -93,14 +93,14 @@ class StaffRepository
     }
   }
 
-  public function delete(Staff $staff): bool
+  public function delete(Customer $customer): bool
   {
     DB::beginTransaction();
     try {
-      $this->uploadFile->deleteExistFile("staff/$staff->profile_image");
+      $this->uploadFile->deleteExistFile("customers/$customer->profile_image");
 
-      $staff->user?->deleteOrFail();
-      $delete_staff = $staff->deleteOrFail();
+      $customer->user?->deleteOrFail();
+      $delete_customer = $customer->deleteOrFail();
     } catch (\Exception $e) {
       logger($e->getMessage());
       DB::rollBack();
@@ -109,6 +109,6 @@ class StaffRepository
     }    
 
     DB::commit();
-    return $delete_staff;
+    return $delete_customer;
   }
 }

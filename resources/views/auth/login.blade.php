@@ -13,7 +13,11 @@
       name="username"
       placeholder="Enter your username"
       required
-      value="{{ old('username') }}"
+      @if (isset($_COOKIE["username"]))
+        value="{{ $_COOKIE['username'] }}"
+      @else
+        value="{{ old('username') }}"        
+      @endif
       autofocus />
     @error('username')
       <div class="text-danger mt-1">{{ $message }}</div>
@@ -22,9 +26,6 @@
   <div class="mb-3 form-password-toggle">
     <div class="d-flex justify-content-between">
       <label class="form-label" for="password">Password</label>
-      <a href="auth-forgot-password-basic.html">
-        <small>Forgot Password?</small>
-      </a>
     </div>
     <div class="input-group input-group-merge">
       <input
@@ -32,6 +33,9 @@
         id="password"
         class="form-control"
         name="password"
+        @if (isset($_COOKIE["password"]))
+          value="{{ $_COOKIE['password'] }}"                  
+        @endif
         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
         aria-describedby="password" />
       <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
@@ -42,7 +46,7 @@
   </div>
   <div class="mb-3">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="remember_me" id="remember-me" />
+      <input class="form-check-input" type="checkbox" name="remember" checked id="remember-me" />
       <label class="form-check-label" for="remember-me"> Remember Me </label>
     </div>
   </div>

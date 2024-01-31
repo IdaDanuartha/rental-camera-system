@@ -1,13 +1,14 @@
 @extends('layouts.main')
-@section('title', 'Add Staff Page')
+@section('title', 'Edit Customer Page')
 
 @section('main')
-<form class="card" action="{{ route('staff.store') }}" method="post" enctype="multipart/form-data">
+<form class="card" action="{{ route('customers.update', $customer->id) }}" method="post" enctype="multipart/form-data">
   @csrf
-  <input type="hidden" id="authenticatable_type" name="authenticatable_type" value="App\Models\Staff"/>  
+  @method('PUT')
+  <input type="hidden" id="authenticatable_type" name="authenticatable_type" value="App\Models\Customer"/>  
 
   <div class="d-flex justify-content-between align-items-center">
-    <h5 class="card-header">Create New Staff</h5>    
+    <h5 class="card-header">Edit Customer</h5>    
   </div>  
   <div class="mx-4 mb-4">
     <div class="row">
@@ -18,7 +19,7 @@
           id="name"
           name="name"
           class="form-control"
-          value="{{ old('name') }}"
+          value="{{ $customer->name }}"
           required
           placeholder="Enter name" />
         @error('name')
@@ -32,7 +33,7 @@
           id="username"
           name="user[username]"
           class="form-control"
-          value="{{ old('user.username') }}"
+          value="{{ $customer->user->username }}"
           required
           placeholder="Enter username" />
         @error('user.username')
@@ -46,7 +47,7 @@
           id="email"
           name="user[email]"
           class="form-control"
-          value="{{ old('user.email') }}"
+          value="{{ $customer->user->email }}"
           required
           placeholder="Enter email" />
         @error('user.email')
@@ -60,7 +61,7 @@
           id="phone_number"
           name="phone_number"
           class="form-control"
-          value="{{ old('phone_number') }}"
+          value="{{ $customer->phone_number }}"
           required
           placeholder="Enter phone number" />
         @error('phone_number')
@@ -73,9 +74,7 @@
           type="password"
           id="password"
           name="user[password]"
-          class="form-control"
-          value="{{ old('user.password') }}"
-          required
+          class="form-control"                    
           placeholder="Enter password" />
         @error('user.password')
           <div class="text-danger mt-1">{{ $message }}</div>
@@ -84,7 +83,7 @@
 			<div class="col-span-12 flex flex-col mb-3">
 				<p class="text-second mb-1">Account Status</p>
 				<label class="switch">
-					<input type="checkbox" name="user[status]" checked>
+					<input type="checkbox" name="user[status]" @checked($customer->user->status->value == 1 ? 'on' : '')>
 					<span class="slider round"></span>
 				</label>
 
@@ -95,21 +94,25 @@
       <div class="col-3 flex flex-col mb-3">
 				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
 				<label for="profile_image" class="d-block mb-3">
-					<img src="{{ asset('assets/img/upload-image.jpg') }}" class="create-staff-preview-img border" width="300" alt="">
-				</label>
+					@if ($customer->profile_image)
+						<img src="{{ asset('uploads/customers/' . $customer->profile_image) }}" class="edit-customer-preview-img border" width="300" alt="">
+					@else
+						<img src="{{ asset('assets/img/upload-image.jpg') }}" class="edit-customer-preview-img border" width="300" alt="">
+					@endif
+        </label>
 				<input
 					type="file"
 					id="profile_image"
 					name="profile_image"
-					class="form-control create-staff-input"
+					class="form-control edit-customer-input"
 					/>
 				@error('profile_image')
 					<div class="text-danger mt-1">{{ $message }}</div>
 				@enderror
 			</div>
 			<div class="col-span-12 flex items-center gap-3 mt-2">
-				<button class="btn btn-priebmary me-3" type="submit">Create Staff</button>
-				<a href="{{ route('staff.index') }}" class="btn btn-secondary" type="reset">Cancel Add</a>
+				<button class="btn btn-primary me-3" type="submit">Save Changes</button>
+				<a href="{{ route('customers.index') }}" class="btn btn-secondary" type="reset">Cancel Edit</a>
 			</div>
     </div>  
   </div>  
@@ -118,6 +121,6 @@
 
 @push('js')
   <script>
-    previewImg("create-staff-input", "create-staff-preview-img")
+    previewImg("edit-customer-input", "edit-customer-preview-img")
   </script>
 @endpush

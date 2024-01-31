@@ -1,13 +1,13 @@
 @extends('layouts.main')
-@section('title', 'Add Staff Page')
+@section('title', 'Add Customer Page')
 
 @section('main')
-<form class="card" action="{{ route('staff.store') }}" method="post" enctype="multipart/form-data">
+<form class="card" action="{{ route('customers.store') }}" method="post" enctype="multipart/form-data">
   @csrf
-  <input type="hidden" id="authenticatable_type" name="authenticatable_type" value="App\Models\Staff"/>  
+  <input type="hidden" id="authenticatable_type" name="authenticatable_type" value="App\Models\Customer"/>  
 
   <div class="d-flex justify-content-between align-items-center">
-    <h5 class="card-header">Create New Staff</h5>    
+    <h5 class="card-header">Create New Customer</h5>    
   </div>  
   <div class="mx-4 mb-4">
     <div class="row">
@@ -95,21 +95,21 @@
       <div class="col-3 flex flex-col mb-3">
 				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
 				<label for="profile_image" class="d-block mb-3">
-					<img src="{{ asset('assets/img/upload-image.jpg') }}" class="create-staff-preview-img border" width="300" alt="">
+					<img src="{{ asset('assets/img/upload-image.jpg') }}" class="create-customer-preview-img border" width="300" alt="">
 				</label>
 				<input
 					type="file"
 					id="profile_image"
 					name="profile_image"
-					class="form-control create-staff-input"
+					class="form-control create-customer-input"
 					/>
 				@error('profile_image')
 					<div class="text-danger mt-1">{{ $message }}</div>
 				@enderror
 			</div>
 			<div class="col-span-12 flex items-center gap-3 mt-2">
-				<button class="btn btn-priebmary me-3" type="submit">Create Staff</button>
-				<a href="{{ route('staff.index') }}" class="btn btn-secondary" type="reset">Cancel Add</a>
+				<button class="btn btn-primary me-3" type="submit">Create Customer</button>
+				<a href="{{ route('customers.index') }}" class="btn btn-secondary" type="reset">Cancel Add</a>
 			</div>
     </div>  
   </div>  
@@ -118,6 +118,6 @@
 
 @push('js')
   <script>
-    previewImg("create-staff-input", "create-staff-preview-img")
+    previewImg("create-customer-input", "create-customer-preview-img")
   </script>
 @endpush
