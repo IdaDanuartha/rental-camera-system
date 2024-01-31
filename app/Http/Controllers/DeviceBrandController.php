@@ -2,63 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeviceBrand\StoreDeviceBrandRequest;
+use App\Http\Requests\DeviceBrand\UpdateDeviceBrandRequest;
+use App\Models\DeviceBrand;
+use App\Repositories\DeviceBrandRepository;
+use App\Repositories\DeviceTypeRepository;
+use App\Utils\ResponseMessage;
+use Exception;
 use Illuminate\Http\Request;
 
 class DeviceBrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        protected readonly DeviceBrandRepository $deviceBrand,
+        protected readonly DeviceTypeRepository $deviceType,
+        protected readonly ResponseMessage $responseMessage
+    ) {}
+
+    public function index(Request $request)
+    {                                   
+        $device_brands = $this->deviceBrand->findAllPaginate();
+        $device_types = $this->deviceType->findAll();
+
+        return view('dashboard.devices.brands', compact('device_brands', 'device_types'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function show(DeviceBrand $brand)
+    {                                                   
+        return response()->json([
+            "device_brand" => $this->deviceBrand->findById($brand),
+            "device_types" => $this->deviceType->findAll()
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreDeviceBrandRequest $request)
+    {        
+        try {
+            $store = $this->deviceBrand->store($request->validated());
+
+            if($store) return redirect(route("devices.brands.index"))
+                                ->with("success", $this->responseMessage->response('Device brand'));
+            throw new Exception;
+        } catch (\Exception $e) {  
+            logger($e->getMessage());
+
+            return redirect(route("devices.types.create"))->with("failed", $this->responseMessage->response('device brand', false));
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(UpdateDeviceBrandRequest $request, DeviceBrand $brand)
     {
-        //
+        try {                     
+            $update = $this->deviceBrand->update($request->validated(), $brand);
+
+            if($update) return redirect(route('devices.brands.index'))
+                                ->with('success', $this->responseMessage->response('Device brand', true, 'update'));
+            throw new Exception;
+        } catch (\Exception $e) {
+            return redirect()->route('devices.types.edit', $brand->id)->with('error', $this->responseMessage->response('device brand', false, 'update'));
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(DeviceBrand $brand)
     {
-        //
-    }
+        try {
+            $this->deviceBrand->delete($brand);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return redirect()->route('devices.brands.index')->with('success', $this->responseMessage->response('Device brand', true, 'delete'));
+        } catch (\Exception $e) {            
+            return redirect()->route('devices.brands.index')->with('error', $this->responseMessage->response('device brand', false, 'delete'));
+        }
     }
 }
