@@ -2,63 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeviceType\StoreDeviceTypeRequest;
+use App\Http\Requests\DeviceType\UpdateDeviceTypeRequest;
+use App\Models\DeviceType;
+use App\Repositories\DeviceTypeRepository;
+use App\Utils\ResponseMessage;
+use Exception;
 use Illuminate\Http\Request;
 
 class DeviceTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        protected readonly DeviceTypeRepository $deviceType,
+        protected readonly ResponseMessage $responseMessage
+    ) {}
+
+    public function index(Request $request)
+    {                                   
+        $device_types = $this->deviceType->findAllPaginate();
+        return view('dashboard.devices.types', compact('device_types'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function show(DeviceType $type)
+    {                                                   
+        return response()->json([
+            "device_type" => $this->deviceType->findById($type)
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreDeviceTypeRequest $request)
+    {        
+        try {
+            $store = $this->deviceType->store($request->validated());
+
+            if($store) return redirect(route("devices.types.index"))
+                                ->with("success", $this->responseMessage->response('Device type'));
+            throw new Exception;
+        } catch (\Exception $e) {  
+            logger($e->getMessage());
+
+            return redirect(route("devices.types.create"))->with("failed", $this->responseMessage->response('device type', false));
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(UpdateDeviceTypeRequest $request, DeviceType $type)
     {
-        //
+        try {                     
+            $update = $this->deviceType->update($request->validated(), $type);
+
+            if($update) return redirect(route('devices.types.index'))
+                                ->with('success', $this->responseMessage->response('Device type', true, 'update'));
+            throw new Exception;
+        } catch (\Exception $e) {
+            return redirect()->route('devices.types.edit', $type->id)->with('error', $this->responseMessage->response('device type', false, 'update'));
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(DeviceType $type)
     {
-        //
-    }
+        try {
+            $this->deviceType->delete($type);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return redirect()->route('devices.types.index')->with('success', $this->responseMessage->response('Device type', true, 'delete'));
+        } catch (\Exception $e) {            
+            return redirect()->route('devices.types.index')->with('error', $this->responseMessage->response('device type', false, 'delete'));
+        }
     }
 }
