@@ -41,7 +41,7 @@ class DeviceTypeController extends Controller
         } catch (\Exception $e) {  
             logger($e->getMessage());
 
-            return redirect(route("devices.types.create"))->with("failed", $this->responseMessage->response('device type', false));
+            return redirect(route("devices.types.index"))->with("error", $this->responseMessage->response('device type', false));
         }
     }
 
@@ -54,7 +54,7 @@ class DeviceTypeController extends Controller
                                 ->with('success', $this->responseMessage->response('Device type', true, 'update'));
             throw new Exception;
         } catch (\Exception $e) {
-            return redirect()->route('devices.types.edit', $type->id)->with('error', $this->responseMessage->response('device type', false, 'update'));
+            return redirect()->route('devices.types.index', $type->id)->with('error', $this->responseMessage->response('device type', false, 'update'));
         }
     }
 
