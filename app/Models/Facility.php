@@ -18,6 +18,11 @@ class Facility extends Model
         return $this->belongsTo(FacilityType::class);
     }
 
+    public function facilityImages(): HasMany
+    {
+        return $this->hasMany(FacilityImage::class);
+    }
+
     public function bookingFacilityDetails(): HasMany
     {
         return $this->hasMany(BookingFacilityDetail::class);
