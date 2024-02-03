@@ -49,7 +49,7 @@ class ProductController extends Controller
         try {
             $store = $this->product->store($request->validated());
 
-            if($store) return redirect(route("products.index"))
+            if($store instanceof Product) return redirect(route("products.index"))
                                 ->with("success", $this->responseMessage->response("Product"));
             throw new Exception;
         } catch (\Exception $e) {  
