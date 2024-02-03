@@ -46,7 +46,7 @@ class DeviceBrandController extends Controller
         } catch (\Exception $e) {  
             logger($e->getMessage());
 
-            return redirect(route("devices.types.create"))->with("failed", $this->responseMessage->response('device brand', false));
+            return redirect(route("devices.types.index"))->with("error", $this->responseMessage->response('device brand', false));
         }
     }
 
@@ -59,7 +59,7 @@ class DeviceBrandController extends Controller
                                 ->with('success', $this->responseMessage->response('Device brand', true, 'update'));
             throw new Exception;
         } catch (\Exception $e) {
-            return redirect()->route('devices.types.edit', $brand->id)->with('error', $this->responseMessage->response('device brand', false, 'update'));
+            return redirect()->route('devices.types.index', $brand->id)->with('error', $this->responseMessage->response('device brand', false, 'update'));
         }
     }
 
