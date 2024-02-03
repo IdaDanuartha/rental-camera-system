@@ -2,63 +2,86 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Facility\StoreFacilityRequest;
+use App\Http\Requests\Facility\UpdateFacilityRequest;
+use App\Models\Facility;
+use App\Repositories\FacilityRepository;
+use App\Repositories\FacilityTypeRepository;
+use App\Utils\ResponseMessage;
+use Exception;
 use Illuminate\Http\Request;
 
 class FacilityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        protected readonly FacilityRepository $facility,
+        protected readonly FacilityTypeRepository $facility_type,
+        protected readonly ResponseMessage $responseMessage
+    ) {}
+
+    public function index(Request $request)
+    {                                   
+        $facilities = $this->facility->findAllPaginate();
+        return view('dashboard.facilities.index', compact("facilities"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-    {
-        //
+    {                          
+        $facility_types = $this->facility_type->findAll();
+                 
+        return view('dashboard.facilities.create', compact("facility_types"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function show(Facility $index)
+    {                              
+        $facility = $index;      
+        return view('dashboard.facilities.detail', compact("facility"));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function edit(Facility $index)
+    {         
+        $facility_types = $this->facility_type->findAll();
+        $facility = $index;      
+                    
+        return view('dashboard.facilities.edit', compact("facility", "facility_types"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function store(StoreFacilityRequest $request)
+    {        
+        try {
+            $store = $this->facility->store($request->validated());
+
+            if($store) return redirect(route("facilities.index.index"))
+                                ->with("success", $this->responseMessage->response("Facility"));
+            throw new Exception;
+        } catch (\Exception $e) {  
+            logger($e->getMessage());
+
+            return redirect(route("facilities.index.create"))->with("error", $this->responseMessage->response("facility", false));
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateFacilityRequest $request, Facility $index)
     {
-        //
+        try {                     
+            $update = $this->facility->update($request->validated(), $index);
+
+            if($update) return redirect(route('facilities.index.index'))
+                                ->with('success', $this->responseMessage->response("Facility", true, 'update'));
+            throw new Exception;
+        } catch (\Exception $e) {
+            return redirect()->route('facilities.index.edit', $index->id)->with('error', $this->responseMessage->response("facility", false, 'update'));
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Facility $index)
     {
-        //
+        try {
+            $this->facility->delete($index);
+
+            return redirect()->route('facilities.index.index')->with('success', $this->responseMessage->response("Facility", true, 'delete'));
+        } catch (\Exception $e) {            
+            return redirect()->route('facilities.index.index')->with('error', $this->responseMessage->response("facility", false, 'delete'));
+        }
     }
 }
