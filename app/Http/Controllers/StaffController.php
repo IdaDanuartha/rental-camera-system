@@ -49,7 +49,7 @@ class StaffController extends Controller
         } catch (\Exception $e) {  
             logger($e->getMessage());
 
-            return redirect(route("staff.create"))->with("failed", $this->responseMessage->response('staff', false));
+            return redirect(route("staff.create"))->with("error", $this->responseMessage->response('staff', false));
         }
     }
 
