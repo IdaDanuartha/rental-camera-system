@@ -2,63 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\Product;
+use App\Repositories\DeviceSeriesRepository;
+use App\Repositories\ProductRepository;
+use App\Utils\ResponseMessage;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        protected readonly ProductRepository $product,
+        protected readonly DeviceSeriesRepository $device_series,
+        protected readonly ResponseMessage $responseMessage
+    ) {}
+
+    public function index(Request $request)
+    {                                   
+        $products = $this->product->findAllPaginate();
+        return view('dashboard.products.index', compact("products"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-    {
-        //
+    {                          
+        $device_series = $this->device_series->findAll();
+                 
+        return view('dashboard.products.create', compact("device_series"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function show(Product $product)
+    {                                    
+        return view('dashboard.products.detail', compact("product"));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function edit(Product $product)
+    {         
+        $device_series = $this->device_series->findAll();
+                                  
+        return view('dashboard.products.edit', compact("product", "device_series"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function store(StoreProductRequest $request)
+    {        
+        try {
+            $store = $this->product->store($request->validated());
+
+            if($store) return redirect(route("products.index"))
+                                ->with("success", $this->responseMessage->response("Product"));
+            throw new Exception;
+        } catch (\Exception $e) {  
+            logger($e->getMessage());
+
+            return redirect(route("products.create"))->with("error", $this->responseMessage->response("product", false));
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        try {                     
+            $update = $this->product->update($request->validated(), $product);
+
+            if($update) return redirect(route('products.index'))
+                                ->with('success', $this->responseMessage->response("Product", true, 'update'));
+            throw new Exception;
+        } catch (\Exception $e) {
+            return redirect()->route('products.edit', $product->id)->with('error', $this->responseMessage->response("product", false, 'update'));
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        try {
+            $this->product->delete($product);
+
+            return redirect()->route('products.index')->with('success', $this->responseMessage->response("Product", true, 'delete'));
+        } catch (\Exception $e) {            
+            return redirect()->route('products.index')->with('error', $this->responseMessage->response("product", false, 'delete'));
+        }
     }
 }
