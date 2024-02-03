@@ -10,6 +10,25 @@
   <div class="mx-4 mb-4">
     <div class="row">
       <div class="col-12 mb-3">
+        <label for="images" class="form-label">Product Images (Upload multiple images)</label>
+        <div class="row multiple-preview-images mb-3">
+          <label for="images" class="col-3">
+            <img src="{{ asset('assets/img/upload-image.jpg') }}" class="border" width="200px" alt="">
+          </label>
+        </div>
+        <input
+          type="file"
+          id="images"
+          name="images[]"
+          class="form-control create-product-multiple-images"
+          required
+          multiple
+          />
+        @error('images')
+          <div class="text-danger mt-1">{{ $message }}</div>
+        @enderror
+      </div>
+      <div class="col-12 mb-3">
         <label for="name" class="form-label">Name</label>
         <input
           type="text"
@@ -23,7 +42,7 @@
           <div class="text-danger mt-1">{{ $message }}</div>
         @enderror
       </div>
-      <div class="col-12 mb-3">
+      <div class="col-lg-4 col-12 mb-3">
         <label for="device_series_id" class="form-label">Device Series</label>
             <select required class="device-series-select2 form-control" name="device_series_id">
               <option value="">Select Device Series</option>
@@ -39,7 +58,7 @@
               <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
       </div>
-      <div class="col-6 mb-3">
+      <div class="col-lg-4 col-12 mb-3">
         <label for="rental_price" class="form-label">Rental Price</label>
         <input
           type="number"
@@ -53,7 +72,7 @@
           <div class="text-danger mt-1">{{ $message }}</div>
         @enderror
       </div>
-      <div class="col-6 mb-3">
+      <div class="col-lg-4 col-12 mb-3">
         <label for="stock" class="form-label">Stock</label>
         <input
           type="text"
@@ -87,7 +106,7 @@
   <script>
     $('.device-series-select2').select2()
 
-    previewImg("create-product-input", "create-product-preview-img")
+    previewMultipleImages("create-product-multiple-images", "multiple-preview-images")
     let description = new RichTextEditor("#description");
   </script>
 @endpush

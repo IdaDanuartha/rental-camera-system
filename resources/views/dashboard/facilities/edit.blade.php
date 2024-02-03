@@ -5,11 +5,41 @@
 <form class="card" action="{{ route('facilities.index.update', $facility->id) }}" method="post" enctype="multipart/form-data">
   @csrf
   @method('PUT')
+  <input type="hidden" class="image_deleted" name="image_deleted">
   <div class="d-flex justify-content-between align-items-center">
     <h5 class="card-header">Edit Facility</h5>    
   </div>  
   <div class="mx-4 mb-4">
     <div class="row">
+      <div class="col-12 mb-3">
+        <label for="edit_facility_images" class="form-label">Facility Images (Upload multiple images)</label>
+        <div class="row">
+          @forelse ($facility->facilityImages as $image)
+            <div class="relative mb-2">
+              <i class="bx bx-x position-absolute text-dark fa-lg delete-img-icon" data-id="{{ $image->id }}" style="left: 205px; cursor: pointer;"></i>
+              <img src="{{ asset('uploads/facilities/' . $image->image) }}" class="border" width="200px" alt="">
+            </div>
+          @empty
+            <div class="relative mb-2">
+              <img src="{{ asset('assets/img/upload-image.jpg') }}" class="border" width="200px" alt="">
+            </div>
+          @endforelse
+        </div>
+        <label for="edit_facility_images" class="form-label">Preview New Images :</label>
+        <div class="edit-multiple-preview-images">
+          <img src="{{ asset('assets/img/upload-image.jpg') }}" class="border mb-2" width="200px" alt="">
+        </div>
+        <input
+          type="file"              
+          name="images[]"
+          id="edit_facility_images"
+          class="form-control edit-facility-multiple-images"
+          multiple
+          />
+        @error('images')
+          <div class="text-danger mt-1">{{ $message }}</div>
+        @enderror
+      </div>
       <div class="col-12 mb-3">
         <label for="name" class="form-label">Name</label>
         <input
@@ -88,7 +118,18 @@
   <script>
     $('.facility-type-select2').select2()
 
-    previewImg("create-facility-input", "create-facility-preview-img")
+    $(".delete-img-icon").on('click', function() {
+      $(this).parent().remove()
+
+      let oldValue = $(".image_deleted").val()
+      let arr = oldValue === "" ? [] : oldValue.split(',');
+      arr.push($(this).data('id'));
+      let newValue = arr.join(',');
+
+      $(".image_deleted").val(newValue)
+    })
+
+    previewMultipleImages("edit-facility-multiple-images", "edit-multiple-preview-images")
     let description = new RichTextEditor("#description");
   </script>
 @endpush

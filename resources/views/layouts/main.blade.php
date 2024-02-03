@@ -195,9 +195,9 @@
           $(`.${preview_imgs}`).html('')
           for(let i = 0; i < this.files.length; i++) {
             $(`.${preview_imgs}`).append(`
-              <div class="col-3 mb-4">
-                <img src="${URL.createObjectURL($(`.${input_img}`)[0].files[i])}" class="border" width="100%" alt="">
-              </div>
+              <label for="images" class="col-3">
+                <img src="${URL.createObjectURL($(`.${input_img}`)[0].files[i])}" class="border mb-2" width="100%" alt="">
+              </label>
             `)            
           }
         })

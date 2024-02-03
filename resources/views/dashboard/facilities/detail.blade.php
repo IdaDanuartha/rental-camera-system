@@ -10,6 +10,16 @@
   <div class="mx-4 mb-4">
     <div class="row">
       <div class="col-12 mb-3">
+        <label for="" class="form-label">Facility Images</label>
+        <div class="flex mb-3">
+          <div class="mb-4">
+            @foreach ($facility->facilityImages as $image)
+              <img src="{{ asset('uploads/facilities/' . $image->image) }}" class="border mr-4 mb-4" width="200px" alt="">
+            @endforeach
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
         <label for="name" class="form-label">Name</label>
         <input
           type="text"

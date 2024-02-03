@@ -10,6 +10,25 @@
   <div class="mx-4 mb-4">
     <div class="row">
       <div class="col-12 mb-3">
+        <label for="images" class="form-label">Facility Images (Upload multiple images)</label>
+        <div class="row multiple-preview-images mb-3">
+          <label for="images" class="col-3">
+            <img src="{{ asset('assets/img/upload-image.jpg') }}" class="border" width="200px" alt="">
+          </label>
+        </div>
+        <input
+          type="file"
+          id="images"
+          name="images[]"
+          class="form-control create-facility-multiple-images"
+          required
+          multiple
+          />
+        @error('images')
+          <div class="text-danger mt-1">{{ $message }}</div>
+        @enderror
+      </div>
+      <div class="col-12 mb-3">
         <label for="name" class="form-label">Name</label>
         <input
           type="text"
@@ -87,7 +106,7 @@
   <script>
     $('.facility-type-select2').select2()
 
-    previewImg("create-facility-type-input", "create-facility-type-preview-img")
+    previewMultipleImages("create-facility-multiple-images", "multiple-preview-images")
     let description = new RichTextEditor("#description");
   </script>
 @endpush

@@ -10,6 +10,16 @@
   <div class="mx-4 mb-4">
     <div class="row">
       <div class="col-12 mb-3">
+        <label for="" class="form-label">Product Images</label>
+        <div class="flex mb-3">
+          <div class="mr-4 mb-4">
+            @foreach ($product->productImages as $image)
+              <img src="{{ asset('uploads/products/' . $image->image) }}" class="border" width="200px" alt="">
+            @endforeach
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
         <label for="name" class="form-label">Name</label>
         <input
           type="text"
@@ -19,7 +29,7 @@
           value="{{ $product->name }}"
           readonly />
       </div>
-      <div class="col-6 mb-3">
+      <div class="col-lg-4 col-12 mb-3">
         <label for="device_series" class="form-label">Device Series</label>
         <input
           type="text"
@@ -29,7 +39,7 @@
           value="{{ $product->deviceSeries->name }}"
           readonly />
       </div>
-      <div class="col-6 mb-3">
+      <div class="col-lg-4 col-12 mb-3">
         <label for="rental_price" class="form-label">Rental Price</label>
         <input
           type="number"
@@ -39,7 +49,7 @@
           value="{{ $product->rental_price }}"
           readonly />
       </div>
-      <div class="col-6 mb-3">
+      <div class="col-lg-4 col-12 mb-3">
         <label for="stock" class="form-label">Stock</label>
         <input
           type="text"
