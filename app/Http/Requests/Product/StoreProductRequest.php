@@ -28,6 +28,7 @@ class StoreProductRequest extends FormRequest
             "rental_price" => "required",
             "stock" => "required",
             "description" => "required",
+            "images.*" => "required|file|image|mimes:png,jpg,jpeg,gif,webp,svg"
         ];
     }
 
