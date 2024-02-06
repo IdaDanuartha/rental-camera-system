@@ -10,9 +10,9 @@
             data-bs-dismiss="modal"
             aria-label="Close"></button>
         </div>
-        <div class="modal-body">      
+        <div class="modal-body">
           <div class="row">
-            <div class="col-6 mb-3">
+            <div class="col-md-6 col-12 mb-3">
                 <div class="swiper produtImage" id="detail_product_images">
                     <div class="swiper-wrapper">
                       <div class="swiper-slide">

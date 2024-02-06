@@ -10,8 +10,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceBrandController;
 use App\Http\Controllers\DeviceSeriesController;
 use App\Http\Controllers\DeviceTypeController;
+use App\Http\Controllers\FacilityCartController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FacilityTypeController;
+use App\Http\Controllers\ProductCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StaffController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -78,6 +80,15 @@ Route::middleware(['auth', 'verified'])->group(function() {
     // Transaction
     Route::resource('booking/cameras', BookingCameraController::class, ['as' => 'bookings']);
     Route::resource('booking/facilities', BookingFacilityController::class, ['as' => 'bookings']);
+    
+    // Cart
+    Route::resource('carts/products', ProductCartController::class, ['as' => 'carts']);
+    Route::put('carts/products/{product}/increment', [ProductCartController::class, 'incrementQty']);
+    Route::put('carts/products/{product}/decrement', [ProductCartController::class, 'decrementQty']);
+
+    Route::resource('carts/facilities', FacilityCartController::class, ['as' => 'carts']);
+    Route::put('carts/facilities/{facility}/increment', [FacilityCartController::class, 'incrementQty']);
+    Route::put('carts/facilities/{facility}/decrement', [FacilityCartController::class, 'decrementQty']);
 
 });
 Route::fallback(function() {
