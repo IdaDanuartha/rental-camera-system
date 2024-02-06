@@ -20,9 +20,13 @@ class LoginController extends Controller
     public function authenticate(LoginRequest $request)
     {
         try {
-            $this->authRepository->login($request->validated());
+            $login = $this->authRepository->login($request->validated());
 
-            return redirect()->route("dashboard.index")->with('success', 'Login success! Welcome back ' . auth()->user()->username);                    
+            if($login) {
+                return redirect()->route("dashboard.index")->with('success', 'Login success! Welcome back ' . auth()->user()->username);  
+            } else {
+                return back()->with('not_verified', 'Your email has not been verified! ');  
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Login failed! Check your credentials and try again');
         }

@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ProductRepository;
+use App\Utils\ResponseMessage;
 use Illuminate\Http\Request;
 
 class BookingCameraController extends Controller
 {
+    public function __construct(
+        protected readonly ProductRepository $product,
+        protected readonly ResponseMessage $responseMessage
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = $this->product->findAllPaginate(12);
+        return view("dashboard.bookings.book-camera", compact("products"));
     }
 
     /**

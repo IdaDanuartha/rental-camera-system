@@ -164,13 +164,13 @@
         </li>
         
         <!-- Logout -->
-        <li class="menu-item">
+        {{-- <li class="menu-item">
             <form action="{{ route('logout') }}" method="POST" class="ms-4 mt-2 me-3">
                 @csrf                
                 <button type="submit" class="btn btn-primary text-white" style="width: 100%">
                     Logout
                 </button>                
             </form>  
-        </li>
+        </li> --}}
     </ul>
 </aside>

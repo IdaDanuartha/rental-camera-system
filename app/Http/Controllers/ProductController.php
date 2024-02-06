@@ -37,6 +37,13 @@ class ProductController extends Controller
         return view('dashboard.products.detail', compact("product"));
     }
 
+    public function showJson(Product $product)
+    {                                    
+        return response()->json([
+            "product" => $this->product->findById($product)
+        ]);
+    }
+
     public function edit(Product $product)
     {         
         $device_series = $this->device_series->findAll();

@@ -2,6 +2,8 @@
 @section('title', 'Device Brand Page')
 
 @section('main')
+<x-search-bar></x-search-bar>
+
 <div class="card">
   <div class="d-flex justify-content-between align-items-center">
     <h5 class="card-header">Data Device Brand</h5>

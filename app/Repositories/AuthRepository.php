@@ -2,19 +2,22 @@
 
 namespace App\Repositories;
 
+use App\Models\Customer;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class AuthRepository 
 {
   public function __construct(
-    protected readonly User $user
+    protected readonly User $user,
+    protected readonly Customer $customer
   ) {}
 
   public function login($credentials)
   {
-    try {      
+    try {   
       if(isset($credentials["remember"]) && !empty($credentials["remember"])) {
         setcookie("username", $credentials["username"], time() + (7 * 24 * 60 * 60));
         setcookie("password", $credentials["password"], time() + (7 * 24 * 60 * 60));        
@@ -22,9 +25,17 @@ class AuthRepository
         setcookie("username", "");
         setcookie("password", "");
       }
-      return auth()->attempt(Arr::except($credentials, "remember"), Arr::only($credentials, "remember"));
+      $user = $this->user->where("username", $credentials["username"])->first();
+      
+      if($user->email_verified_at) {
+        return auth()->attempt(Arr::except($credentials, "remember"), Arr::only($credentials, "remember"));
+      } 
+
+      return false;
     } catch (\Exception $e) {
       logger($e->getMessage());
+      setcookie("username", "");
+      setcookie("password", "");
       throw $e;
     }            
   } 
@@ -33,7 +44,11 @@ class AuthRepository
   {
     DB::beginTransaction();     
     try {
-      $user = $this->user->create($data);
+      $user = $this->customer->create()
+                   ->user()->create($data);
+      event(new Registered($user));
+      auth()->login($user);
+
       DB::commit();
 
       return $user;

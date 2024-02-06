@@ -26,9 +26,9 @@ class ProductRepository
     return $this->product->latest()->with(['deviceSeries.deviceBrand', 'productImages'])->get();
   }
 
-  public function findAllPaginate(): LengthAwarePaginator
+  public function findAllPaginate($paginate = 10): LengthAwarePaginator
   {
-    return $this->product->latest()->with(['deviceSeries.deviceBrand', 'productImages'])->paginate(10);
+    return $this->product->latest()->with(['deviceSeries.deviceBrand', 'productImages'])->paginate($paginate);
   }
 
   public function findById(Product $product): Product

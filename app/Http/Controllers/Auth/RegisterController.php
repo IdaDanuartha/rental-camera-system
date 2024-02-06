@@ -22,7 +22,7 @@ class RegisterController extends Controller
         try {
             $this->authRepository->createUser($request->except("confirm_password"));
             
-            return redirect()->route("login")->with('success', 'Account created successfully. Please login!');
+            return redirect(route("verification.notice"))->with('verification', 'We have sent you an email verification! Please check your email');
         } catch (\Exception $e) {
             logger($e->getMessage());
 

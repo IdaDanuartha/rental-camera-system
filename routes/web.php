@@ -14,6 +14,7 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FacilityTypeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StaffController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,15 +37,25 @@ Route::prefix('auth')->group(function() {
 
         Route::post('login', [LoginController::class, 'authenticate'])->name('authenticate');
         Route::post('register', [RegisterController::class, 'createAccount'])->name('register');
-    });
 
-    Route::middleware('auth')->group(function() {
+    });
+    
+    Route::middleware(['auth', 'verified'])->group(function() {
         Route::post('logout', LogoutController::class)->name('logout');
     });
-
+    
 });
+Route::get('/email/verify', function () {
+    return view("auth.verify-email");
+})->middleware('auth')->name('verification.notice');
 
-Route::middleware(['auth'])->group(function() {
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('dashboard', DashboardController::class)->name("dashboard.index");    
     
     // User
@@ -58,6 +69,7 @@ Route::middleware(['auth'])->group(function() {
 
     // Product
     Route::resource('products', ProductController::class);
+    Route::get('products/{product}/json', [ProductController::class, 'showJson']);
 
     // Facility
     Route::resource('facilities/types', FacilityTypeController::class, ['as' => 'facilities']);

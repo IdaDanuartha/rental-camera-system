@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();            
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->smallInteger('role')->comment('[0: Admin, 1: Staff, 2: Customer]')->default(2);
             $table->boolean('status')->default(1);
             $table->morphs('authenticatable');

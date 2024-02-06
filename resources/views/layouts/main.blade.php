@@ -51,6 +51,12 @@
     <!-- Helpers -->
     <script src="/assets/vendor/js/helpers.js"></script>    
     <script src="/assets/js/config.js"></script>
+
+    {{-- Swiper js --}}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
   </head>
 
   <body>
@@ -98,7 +104,7 @@
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          {{-- <x-navbar></x-navbar> --}}
+          <x-navbar></x-navbar>
           <!-- / Navbar -->
 
           <!-- Content wrapper -->
@@ -113,12 +119,11 @@
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                 <div class="mb-2 mb-md-0">
-                  ©
+                  Copyright ©
                   <script>
                     document.write(new Date().getFullYear());
                   </script>
-                  , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
+                  . All Right Reserved
                 </div>
                 <div class="d-none d-lg-inline-block">
                   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
@@ -173,8 +178,8 @@
     <script src="{{ asset('assets/js/richtexteditor/all_plugins.js') }}"></script>
     <script src="{{ asset('assets/js/richtexteditor/rte.js') }}"></script>
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    {{-- Swiper js --}}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
       const rupiah = (number) => {
