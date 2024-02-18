@@ -9,9 +9,17 @@
             <div id="product_carts"></div>
             <div class="card checkout-container mt-2 mb-4">
                 <div class="card-body">
-                  <div class="d-flex justify-content-between">
+                  <div class="mb-3">
+                    <p class="card-text mb-1">Pay</p>
+                    <input type="text" class="form-control" placeholder="Rp. 0,00">
+                  </div>
+                  <div class="d-flex justify-content-between mb-0">
                     <p class="card-text">Total</p>
                     <p class="card-text total-cart-count">Rp 0,00</p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="card-text">Return</p>
+                    <p class="card-text total-return-count">Rp 0,00</p>
                   </div>
                   <form action="{{ route('bookings.cameras.store') }}" method="POST" class="d-block">
                     @csrf

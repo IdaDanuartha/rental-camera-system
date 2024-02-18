@@ -36,21 +36,16 @@ $(document).ready(function() {
               </div>
               <div class="card mt-2 mb-4">
                   <div class="card-body">
-                    <div class="d-flex justify-content-between border-bottom">
+                    <label for="">Booking Date</label>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <input type="date" class="form-control me-2" />
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <input type="date" class="form-control me-2" />
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom mt-3">
                       <p class="card-text">Subtotal</p>
                       <p class="card-text">${rupiah(cart.product.rental_price * cart.qty)}</p>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div class="d-flex align-items-center border rounded-3 px-2 py-1">
-                          <a href="#" class="text-dark cart-decrement-btn">
-                              <i class='bx bx-minus bx-flip-horizontal' ></i>
-                          </a>
-                          <input type="number" disabled class="input-qty" min="1" value="${cart.qty}" style="width: 50px">
-                          <a href="#" class="text-dark cart-increment-btn">
-                              <i class='bx bx-plus bx-flip-horizontal' ></i>
-                          </a>
-                      </div>
-                      <a href="#" class="text-dark delete-product-cart-btn remove-btn"><i class='bx bx-trash bx-flip-horizontal' ></i></a>
                     </div>
                   </div>
               </div>
@@ -156,3 +151,16 @@ let swiper = new Swiper(".produtImage", {
       prevEl: ".swiper-button-prev",
     },
 });
+
+/**
+ * <div class="d-flex align-items-center border rounded-3 px-2 py-1">
+        <a href="#" class="text-dark cart-decrement-btn">
+            <i class='bx bx-minus bx-flip-horizontal' ></i>
+        </a>
+        <input type="number" disabled class="input-qty" min="1" value="${cart.qty}" style="width: 50px">
+        <a href="#" class="text-dark cart-increment-btn">
+            <i class='bx bx-plus bx-flip-horizontal' ></i>
+        </a>
+    </div>
+    <a href="#" class="text-dark delete-product-cart-btn remove-btn"><i class='bx bx-trash bx-flip-horizontal' ></i></a>
+ */

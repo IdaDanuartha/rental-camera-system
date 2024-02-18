@@ -19,6 +19,8 @@ return new class extends Migration
                   ->cascadeOnUpdate()
                   ->cascadeOnDelete();
             $table->integer('total_price');
+            $table->integer('total_payment');
+            $table->integer('total_return');
             $table->timestamps();
         });
     }
