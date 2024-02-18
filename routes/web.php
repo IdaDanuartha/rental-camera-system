@@ -77,6 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     // Facility
     Route::resource('facilities/types', FacilityTypeController::class, ['as' => 'facilities']);
     Route::resource('facilities/index', FacilityController::class, ['as' => 'facilities']);
+    Route::get('facilities/{facility}/json', [FacilityController::class, 'showJson']);
     
     // Cart
     Route::resource('carts/products', ProductCartController::class, ['as' => 'carts']);
@@ -90,8 +91,10 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::resource('booking/facilities', BookingFacilityController::class, ['as' => 'bookings']);
 
     Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
-    Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
-    Route::delete("/orders/{order}", [OrderController::class, "destroy"])->name("orders.destroy");
+    Route::get("/orders/camera/{order}", [OrderController::class, "showCamera"])->name("orders.camera.show");
+    Route::get("/orders/facility/{order}", [OrderController::class, "showFacility"])->name("orders.facility.show");
+    Route::delete("/orders/camera/{order}", [OrderController::class, "destroyCamera"])->name("orders.camera.destroy");
+    Route::delete("/orders/facility/{order}", [OrderController::class, "destroyFacility"])->name("orders.facility.destroy");
 
 });
 Route::fallback(function() {

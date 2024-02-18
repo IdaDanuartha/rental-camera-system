@@ -6,7 +6,6 @@ use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\Facility;
 use App\Models\FacilityImage;
-use App\Models\Product;
 use App\Utils\UploadFile;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

@@ -17,8 +17,8 @@ class FacilityCart extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product(): BelongsTo
+    public function facility(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Facility::class);
     }
 }

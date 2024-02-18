@@ -5,7 +5,7 @@
 <x-search-bar></x-search-bar>
 <div class="card">
   <div class="d-flex justify-content-between align-items-center">
-    <h5 class="card-header">Data Order Product</h5>
+    <h5 class="card-header">Data Order Camera</h5>
   </div>
   <div class="table-responsive text-nowrap">
     <table class="table">
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
-        @forelse ($orders as $item)        
+        @forelse ($camera_orders as $item)        
           <tr class="table-body">
             <input type="hidden" class="order_id" value="{{ $item->id }}">
             <td>
@@ -40,11 +40,11 @@
                   <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{ route('orders.show', $item->id) }}"
+                  <a class="dropdown-item" href="{{ route('orders.camera.show', $item->id) }}"
                     ><i class="bx bx-file me-1"></i> Detail</a
                   >
-                  <a class="dropdown-item delete-order-data" href="#" data-bs-toggle="modal"
-                  data-bs-target="#deleteOrderModal"
+                  <a class="dropdown-item delete-order-camera-data" href="#" data-bs-toggle="modal"
+                  data-bs-target="#deleteCameraOrderModal"
                     ><i class="bx bx-trash me-1"></i> Delete</a
                   >
                 </div>
@@ -59,7 +59,7 @@
       </tbody>
     </table>
     <div class="mx-3">
-      {{ $orders->links() }}
+      {{ $camera_orders->links() }}
     </div>
   </div>
 </div>
@@ -82,7 +82,7 @@
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
-        @forelse ($orders as $item)        
+        @forelse ($facility_orders as $item)        
           <tr class="table-body">
             <input type="hidden" class="order_id" value="{{ $item->id }}">
             <td>
@@ -103,11 +103,11 @@
                   <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{ route('orders.show', $item->id) }}"
+                  <a class="dropdown-item" href="{{ route('orders.facility.show', $item->id) }}"
                     ><i class="bx bx-file me-1"></i> Detail</a
                   >
-                  <a class="dropdown-item delete-order-data" href="#" data-bs-toggle="modal"
-                  data-bs-target="#deleteOrderModal"
+                  <a class="dropdown-item delete-order-facility-data" href="#" data-bs-toggle="modal"
+                  data-bs-target="#deleteFacilityOrderModal"
                     ><i class="bx bx-trash me-1"></i> Delete</a
                   >
                 </div>
@@ -122,14 +122,14 @@
       </tbody>
     </table>
     <div class="mx-3">
-      {{ $orders->links() }}
+      {{ $facility_orders->links() }}
     </div>
   </div>
 </div>
 
 @include('partials.modal-order')
 @endsection
-
+r
 @push('js')
 <script src="{{ asset('assets/js/custom/order.js') }}"></script>
 @endpush

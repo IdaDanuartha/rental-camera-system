@@ -13,14 +13,9 @@ class BookingFacility extends Model
 
     protected $guarded = ['id'];
 
-    public function customer(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
-    }
-
-    public function staff(): BelongsTo
-    {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(User::class);
     }
 
     public function bookingFacilityDetails(): HasMany

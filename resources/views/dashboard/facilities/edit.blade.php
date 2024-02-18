@@ -55,9 +55,9 @@
         @enderror
       </div>
       <div class="col-lg-4 col-12 mb-3">
-        <label for="facility_type_id" class="form-label">Device Series</label>
+        <label for="facility_type_id" class="form-label">Facility Type</label>
             <select required class="facility-type-select2 form-control" name="facility_type_id">
-              <option value="">Select Device Series</option>
+              <option value="">Select Facility Type</option>
               @foreach ($facility_types as $item)
                 @if ($facility->facility_type_id === $item->id)
                   <option value="{{ $item->id }}" selected>{{ $item->name }}</option>

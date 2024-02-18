@@ -38,6 +38,13 @@ class FacilityController extends Controller
         return view('dashboard.facilities.detail', compact("facility"));
     }
 
+    public function showJson(Facility $facility)
+    {                                    
+        return response()->json([
+            "facility" => $this->facility->findById($facility)
+        ]);
+    }
+
     public function edit(Facility $index)
     {         
         $facility_types = $this->facility_type->findAll();

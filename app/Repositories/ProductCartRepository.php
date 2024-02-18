@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Utils\UploadFile;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
@@ -44,6 +45,7 @@ class ProductCartRepository
         return $productCart;
       } else {
         $product_cart->qty += 1;
+        $product_cart->return_date = Carbon::createFromDate($product_cart->return_date)->addDays();
         $product_cart->update();
 
         DB::commit();

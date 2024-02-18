@@ -6,9 +6,9 @@
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0">
         <div>
-            <div id="product_carts"></div>
+            <div id="{{ $name }}"></div>
             <div class="card checkout-container mt-2 mb-4">
-                <form action="{{ route('bookings.cameras.store') }}" method="POST" class="card-body">
+                <form action="{{ $route }}" method="POST" class="card-body">
                   @csrf
                   <input type="hidden" name="total_price" id="total-price" required>
                   <input type="hidden" name="total_return" id="total-return" required>

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Booking Camera Page')
+@section('title', 'Booking Facility Page')
 
 @section('main')
 <x-search-bar>
@@ -16,23 +16,22 @@
 </x-search-bar>
 <x-offcanvas-cart>
     @slot('name')
-        product_carts
+        facility_carts
     @endslot
     @slot('route')
-        /booking/cameras
+        /booking/facilities
     @endslot
 </x-offcanvas-cart>
 
 <div class="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 g-4 mb-5">
-    @foreach ($products as $item)
-        <div class="col product-card detail-product-data">
-            <input type="hidden" class="product_id" value="{{ $item->id }}">
+    @foreach ($facilities as $item)
+        <div class="col facility-card detail-facility-data">
+            <input type="hidden" class="facility_id" value="{{ $item->id }}">
             <div class="card w-full relative p-2">
             <div class="position-absolute" style="top: 12px; left: 12px;">
-                <span class="badge bg-label-primary">{{ $item->deviceSeries->name }}</span>
-                <span class="badge bg-label-warning">{{ $item->deviceSeries->deviceBrand->deviceType->name }}</span>
+                <span class="badge bg-label-primary">{{ $item->facilityType->name }}</span>
             </div>
-            <img class="card-img-top cursor-pointer" data-bs-toggle="modal" data-bs-target="#detailProductModal" src="{{ asset("uploads/products/" . $item->productImages[0]->image) }}" alt="Card image cap" />
+            <img class="card-img-top cursor-pointer" data-bs-toggle="modal" data-bs-target="#detailFacilityModal" src="{{ asset("uploads/facilities/" . $item->facilityImages[0]->image) }}" alt="Card image cap" />
             <div class="card-body p-2 mt-4">
                 <h5 class="card-title">{{ $item->name }}</h5>
                 <p class="card-text">Rp. @rupiah($item->rental_price)/day</p>
@@ -44,9 +43,9 @@
         </div>
     @endforeach
 </div>
-@include('partials.modal-book-product')
+@include('partials.modal-book-facility')
 @endsection
 
 @push('js')
-<script src="{{ asset('assets/js/custom/book-product.js') }}"></script>
+<script src="{{ asset('assets/js/custom/book-facility.js') }}"></script>
 @endpush
