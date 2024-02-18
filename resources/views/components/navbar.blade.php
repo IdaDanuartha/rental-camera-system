@@ -32,15 +32,19 @@ id="layout-navbar" style="background: transparent !important; box-shadow: none !
                 </a>
                 </li>
                 <li>
-                <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                <a class="dropdown-item" href="#">
-                    <i class="bx bx-user me-2"></i>
-                    <span class="align-middle">My Profile</span>
-                </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                    </a>
                 </li>
                 <li>
+                    <a class="dropdown-item" href="{{ route('orders.index') }}">
+                        <i class='bx bx-shopping-bag me-2'></i>
+                        <span class="align-middle">My Orders</span>
+                    </a>
                 </li>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf

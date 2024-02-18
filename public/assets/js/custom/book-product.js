@@ -32,16 +32,17 @@ $(document).ready(function() {
                           <p class="mx-2">x</p>
                           <p>${cart.qty} day</p>
                       </div>
+                      <a href="#" class="text-dark delete-product-cart-btn remove-btn"><i class='bx bx-trash bx-flip-horizontal' ></i></a>
                   </div>
               </div>
               <div class="card mt-2 mb-4">
                   <div class="card-body">
                     <label for="">Booking Date</label>
                     <div class="d-flex justify-content-between align-items-center mt-2">
-                      <input type="date" class="form-control me-2" />
+                      <input type="date" class="form-control start-book-input me-2" value="${formatInputDate(cart.booking_date)}" />
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
-                      <input type="date" class="form-control me-2" />
+                      <input type="date" class="form-control end-book-input me-2" value="${formatInputDate(cart.return_date)}" />
                     </div>
                     <div class="d-flex justify-content-between border-bottom mt-3">
                       <p class="card-text">Subtotal</p>
@@ -68,21 +69,44 @@ $(document).ready(function() {
           $(".checkout-container").addClass("d-none")
         }        
 
-        $(".cart-increment-btn").on("click", function() {   
+        $(".start-book-input").on("change", function() {
+          const start_date = new Date($(".start-book-input").val())   
+          const end_date = new Date($(".end-book-input").val())
+
+          let total_time = end_date.getTime() - start_date.getTime();
+          let total_days = Math.round(total_time / (1000 * 3600 * 24));
+
           $.ajax({
               type: "PUT",
-              url: `/carts/products/${$(this).closest('.product-cart').find('.product_cart_id').val()}/increment`,            
+              url: `/carts/products/${$(this).closest('.product-cart').find('.product_cart_id').val()}/change-booking-date`,  
+              data: {
+                total_days: total_days,
+                start_date: $(this).val(),
+                end_date: $(".end-book-input").val(),
+              } ,         
               dataType: "json",
               success: function(response){
                 getProductCarts()
               }
           })
         })
-        
-        $(".cart-decrement-btn").on("click", function() {  
+
+        $(".end-book-input").on("change", function() {
+          const start_date = new Date($(".start-book-input").val())   
+          const end_date = new Date($(".end-book-input").val())
+
+          let total_time = end_date.getTime() - start_date.getTime();
+          let total_days = Math.round(total_time / (1000 * 3600 * 24));
+
+          console.log(total_days, $(".start-book-input").val(), $(".end-book-input").val())
           $.ajax({
               type: "PUT",
-              url: `/carts/products/${$(this).closest('.product-cart').find('.product_cart_id').val()}/decrement`,            
+              url: `/carts/products/${$(this).closest('.product-cart').find('.product_cart_id').val()}/change-booking-date`,  
+              data: {
+                total_days: total_days,
+                start_date: $(".start-book-input").val(),
+                end_date: $(this).val(),
+              } ,         
               dataType: "json",
               success: function(response){
                 getProductCarts()
@@ -99,6 +123,13 @@ $(document).ready(function() {
                 getProductCarts()
               }
           })
+        })
+
+        $(".total-pay-input").on("change", function() {
+          let total_return = $(".total-pay-input").val() - total
+          $(".total-return-count").html(rupiah(total_return))
+          $("#total-return").val(total_return)
+          $("#total-price").val(total)
         })
       }
     })

@@ -13,6 +13,7 @@ use App\Http\Controllers\DeviceTypeController;
 use App\Http\Controllers\FacilityCartController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FacilityTypeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StaffController;
@@ -76,19 +77,21 @@ Route::middleware(['auth', 'verified'])->group(function() {
     // Facility
     Route::resource('facilities/types', FacilityTypeController::class, ['as' => 'facilities']);
     Route::resource('facilities/index', FacilityController::class, ['as' => 'facilities']);
+    
+    // Cart
+    Route::resource('carts/products', ProductCartController::class, ['as' => 'carts']);
+    Route::put('carts/products/{product}/change-booking-date', [ProductCartController::class, 'changeBookingDate']);
+
+    Route::resource('carts/facilities', FacilityCartController::class, ['as' => 'carts']);
+    Route::put('carts/facilities/{facility}/change-booking-date', [FacilityCartController::class, 'changeBookingDate']);
 
     // Transaction
     Route::resource('booking/cameras', BookingCameraController::class, ['as' => 'bookings']);
     Route::resource('booking/facilities', BookingFacilityController::class, ['as' => 'bookings']);
-    
-    // Cart
-    Route::resource('carts/products', ProductCartController::class, ['as' => 'carts']);
-    Route::put('carts/products/{product}/increment', [ProductCartController::class, 'incrementQty']);
-    Route::put('carts/products/{product}/decrement', [ProductCartController::class, 'decrementQty']);
 
-    Route::resource('carts/facilities', FacilityCartController::class, ['as' => 'carts']);
-    Route::put('carts/facilities/{facility}/increment', [FacilityCartController::class, 'incrementQty']);
-    Route::put('carts/facilities/{facility}/decrement', [FacilityCartController::class, 'decrementQty']);
+    Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
+    Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
+    Route::delete("/orders/{order}", [OrderController::class, "destroy"])->name("orders.destroy");
 
 });
 Route::fallback(function() {

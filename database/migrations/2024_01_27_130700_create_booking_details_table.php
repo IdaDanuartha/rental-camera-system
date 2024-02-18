@@ -23,7 +23,7 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnUpdate()
                   ->cascadeOnDelete();
-            $table->integer('quantity');
+            $table->integer('qty');
             $table->integer('rental_price');
             $table->dateTime('booking_date');
             $table->dateTime('return_date');

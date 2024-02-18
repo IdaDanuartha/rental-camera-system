@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookingProduct\StoreBookingProduct;
+use App\Models\Booking;
 use App\Repositories\BookingProductRepository;
 use App\Repositories\ProductRepository;
 use App\Utils\ResponseMessage;
@@ -28,18 +30,18 @@ class BookingCameraController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBookingProduct $request)
     {
         try {
             $store = $this->bookingProduct->store($request->validated());
 
-            if($store) return redirect(route("customers.index"))
+            if($store instanceof Booking) return redirect(route("bookings.cameras.index"))
                                 ->with("success", "Camera booked successfully");
             throw new Exception;
         } catch (\Exception $e) {  
             logger($e->getMessage());
 
-            return redirect(route("customers.create"))->with("error", "Failed to booked camera");
+            return redirect(route("bookings.cameras.index"))->with("error", "Failed to booked camera");
         }
     }
 }

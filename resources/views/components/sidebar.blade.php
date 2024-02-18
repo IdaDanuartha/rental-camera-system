@@ -148,7 +148,7 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Transaction</span></li>
 
         <!-- Booking Kamera -->
-        <li class="menu-item {{ Request::is('bookings/cameras*') ? 'active':'' }}">
+        <li class="menu-item {{ Request::is('booking/cameras*') ? 'active':'' }}">
             <a href="{{ route('bookings.cameras.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Booking Camera</div>
@@ -156,7 +156,7 @@
         </li>
 
         <!-- Booking Facility -->
-        <li class="menu-item {{ Request::is('bookings/facilities*') ? 'active':'' }}">
+        <li class="menu-item {{ Request::is('booking/facilities*') ? 'active':'' }}">
             <a href="{{ route('bookings.facilities.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Booking Facility</div>

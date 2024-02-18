@@ -24,6 +24,8 @@ return new class extends Migration
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
             $table->integer('qty')->default(1);
+            $table->date('booking_date')->default(now());
+            $table->date('return_date')->default(now()->addDay(1));
             $table->timestamps();
         });
     }

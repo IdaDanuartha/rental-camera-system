@@ -48,16 +48,16 @@ class ProductCartController extends Controller
             logger($e->getMessage());
 
             return response()->json([
-                "code" => 400,
+                "code" => 500,
                 "message" => "Failed to add product to cart"
             ]);
         }
     }
 
-    public function incrementQty(Request $request, ProductCart $product)
+    public function changeBookingDate(Request $request, ProductCart $product)
     {
         try {                     
-            $update = $this->productCart->incrementQty($product);
+            $update = $this->productCart->changeBookingDate($request->all(), $product);
 
             if($update) {
                 return response()->json([
@@ -70,29 +70,7 @@ class ProductCartController extends Controller
             logger($e->getMessage());
 
             return response()->json([
-                "code" => 400,
-                "message" => "Failed to update product to cart"
-            ]);
-        }
-    }
-
-    public function decrementQty(Request $request, ProductCart $product)
-    {
-        try {                     
-            $update = $this->productCart->decrementQty($product);
-
-            if($update) {
-                return response()->json([
-                    "code" => 200,
-                    "message" => "Product has been updated from cart"
-                ]);
-            }
-            throw new Exception;
-        } catch (\Exception $e) {
-            logger($e->getMessage());
-
-            return response()->json([
-                "code" => 400,
+                "code" => 500,
                 "message" => "Failed to update product to cart"
             ]);
         }
@@ -114,7 +92,7 @@ class ProductCartController extends Controller
             logger($e->getMessage());
         
             return response()->json([
-                "code" => 400,
+                "code" => 500,
                 "message" => "Failed to delete product to cart"
             ]);
         }

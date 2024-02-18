@@ -18,6 +18,7 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnUpdate()
                   ->cascadeOnDelete();
+            $table->string('code');
             $table->integer('total_price');
             $table->integer('total_payment');
             $table->integer('total_return');

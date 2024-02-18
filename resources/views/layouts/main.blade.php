@@ -208,6 +208,14 @@
           }
         })
       }
+
+      const formatInputDate = (date) => {
+        const object_date = new Date(date)
+        const get_month = object_date.getMonth()+1 < 10 ? "0" + (object_date.getMonth()+1).toString() : object_date.getMonth()+1
+        const get_date = object_date.getDate() < 10 ? "0" + (object_date.getDate()).toString() : object_date.getDate()
+        
+        return `${object_date.getFullYear()}-${get_month}-${get_date}`
+      }
     </script>
 
     @stack('js')

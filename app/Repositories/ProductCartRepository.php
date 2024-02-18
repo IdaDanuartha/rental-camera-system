@@ -7,6 +7,7 @@ use App\Models\ProductCart;
 use App\Utils\UploadFile;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class ProductCartRepository
@@ -56,19 +57,16 @@ class ProductCartRepository
     }
   }
 
-  public function incrementQty(ProductCart $productCart): bool
+  public function changeBookingDate($request, ProductCart $productCart): bool
   {
     DB::beginTransaction();    
     try {  
-      $product = $this->product->find($productCart->product_id);
+      $update = $productCart->updateOrFail([
+        "qty" => Arr::get($request, "total_days"),
+        "booking_date" => Arr::get($request, "start_date"),
+        "return_date" => Arr::get($request, "end_date"),
+      ]);
 
-      if($productCart->qty < $product->stock) {
-        $update = $productCart->updateOrFail([
-          "qty" => ++$productCart->qty
-        ]);	
-      } else {
-        $update = false;
-      }    
     } catch (\Exception $e) {  
       logger($e->getMessage());
       DB::rollBack();
@@ -80,27 +78,51 @@ class ProductCartRepository
     return $update;
   }
 
-  public function decrementQty(ProductCart $productCart): bool
-  {
-    DB::beginTransaction();    
-    try {        
-      if($productCart->qty > 1) {
-        $update = $productCart->updateOrFail([
-          "qty" => --$productCart->qty
-        ]);	
-      } else {
-        $update = false;
-      }		      
-    } catch (\Exception $e) {  
-      logger($e->getMessage());
-      DB::rollBack();
-      
-      return $e;
-    }
+  // public function incrementQty(ProductCart $productCart): bool
+  // {
+  //   DB::beginTransaction();    
+  //   try {  
+  //     $product = $this->product->find($productCart->product_id);
 
-    DB::commit();
-    return $update;
-  }
+  //     if($productCart->qty < $product->stock) {
+  //       $update = $productCart->updateOrFail([
+  //         "qty" => ++$productCart->qty
+  //       ]);	
+  //     } else {
+  //       $update = false;
+  //     }    
+  //   } catch (\Exception $e) {  
+  //     logger($e->getMessage());
+  //     DB::rollBack();
+      
+  //     return $e;
+  //   }
+
+  //   DB::commit();
+  //   return $update;
+  // }
+
+  // public function decrementQty(ProductCart $productCart): bool
+  // {
+  //   DB::beginTransaction();    
+  //   try {        
+  //     if($productCart->qty > 1) {
+  //       $update = $productCart->updateOrFail([
+  //         "qty" => --$productCart->qty
+  //       ]);	
+  //     } else {
+  //       $update = false;
+  //     }		      
+  //   } catch (\Exception $e) {  
+  //     logger($e->getMessage());
+  //     DB::rollBack();
+      
+  //     return $e;
+  //   }
+
+  //   DB::commit();
+  //   return $update;
+  // }
 
   public function delete(ProductCart $productCart): bool
   {

@@ -5,18 +5,21 @@ namespace App\Repositories;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\DeviceBrand;
+use App\Models\ProductCart;
 use App\Utils\UploadFile;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BookingProductRepository
 {
   public function __construct(
     protected readonly Booking $booking,
     protected readonly BookingDetail $bookingDetail,
+    protected readonly ProductCart $productCart,
     protected readonly UploadFile $uploadFile
   ) {}
 
@@ -27,7 +30,7 @@ class BookingProductRepository
 
   public function findAllPaginate(): LengthAwarePaginator
   {
-    return $this->booking->latest()->with(['bookingDetails.product', 'user'])->paginate(10);
+    return $this->booking->latest()->with(['bookingDetails.product', 'user'])->paginate(5);
   }
 
   public function findById(Booking $booking): Booking
@@ -39,17 +42,27 @@ class BookingProductRepository
   {
     DB::beginTransaction();
     try {
-      $booking = $this->booking->create(Arr::except($request, "details"));     
-     
-      foreach($request["details"] as $detail) {
+      $request["code"] = strtoupper(Str::random(10));
+      
+      $product_carts = $this->productCart->with("product")->where("user_id", auth()->id())->get();
+      $request["user_id"] = auth()->id();
+
+      $booking = $this->booking->create($request);
+      $request["details"]["booking_id"] = $booking->id;
+
+      foreach($product_carts as $cart) {
         $this->bookingDetail->create([
-            "booking_id" => $booking->id,
-            "product_id" => $detail["product_id"],
-            "quantity" => $detail["quantity"],
-            "rental_price" => $detail["rental_price"],
-            "booking_date" => $detail["booking_date"],
-            "rental_date" => $detail["rental_date"],
+          "booking_id" => $booking->id,
+          "product_id" => $cart->product_id,
+          "qty" => $cart->qty,
+          "booking_date" => $cart->booking_date,
+          "return_date" => $cart->return_date,
+          "rental_price" => $cart->product->rental_price,
         ]);
+      }
+
+      foreach($product_carts as $cart) {
+        $cart->delete();
       }
     } catch (\Exception $e) {  
       logger($e->getMessage());
