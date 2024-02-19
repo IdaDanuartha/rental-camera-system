@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Http\Requests\BookingFacility\StoreBookingFacility;
 use App\Models\BookingFacility;
 use App\Repositories\BookingFacilityRepository;
@@ -23,8 +24,14 @@ class BookingFacilityController extends Controller
      */
     public function index()
     {
-        $facilities = $this->facility->findAllPaginate(12);
-        return view("dashboard.bookings.book-facility", compact("facilities"));
+        if(auth()->user()->role === Role::CUSTOMER) {
+            $facilities = $this->facility->findAllPaginate(12);
+            return view("dashboard.bookings.book-facility", compact("facilities"));
+        }
+        else {
+            $transactions = $this->bookingFacility->findAllPaginate(10);
+            return view("dashboard.bookings.facility.index", compact("transactions"));
+        }
     }
 
     /**

@@ -39,7 +39,7 @@ class CustomerRepository
     DB::beginTransaction();
     try {  
       if ($request["profile_image"]) {         
-        $filename = $this->uploadFile->uploadSingleFile($request['profile_image'], "customers");
+        $filename = $this->uploadFile->uploadSingleFile($request['profile_image'], "users");
         $request['profile_image'] = $filename;
       }  
 
@@ -66,11 +66,11 @@ class CustomerRepository
     DB::beginTransaction();    
     try {  
       if (Arr::has($request, 'profile_image') && Arr::get($request, 'profile_image')) {
-        $this->uploadFile->deleteExistFile("customers/$customer->profile_image");
+        $this->uploadFile->deleteExistFile("users/$customer->profile_image");
 
         $image = Arr::get($request, 'profile_image');
 
-        $filename = $this->uploadFile->uploadSingleFile($image, "customers");
+        $filename = $this->uploadFile->uploadSingleFile($image, "users");
         $request['profile_image'] = $filename;
       }  
 
@@ -97,7 +97,7 @@ class CustomerRepository
   {
     DB::beginTransaction();
     try {
-      $this->uploadFile->deleteExistFile("customers/$customer->profile_image");
+      $this->uploadFile->deleteExistFile("users/$customer->profile_image");
 
       $customer->user?->deleteOrFail();
       $delete_customer = $customer->deleteOrFail();

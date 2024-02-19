@@ -69,80 +69,82 @@
             </a>
         </li>
         
-        <!-- Pages -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">User</span></li>
+        @if (auth()->user()->isAdmin())
+            <!-- Pages -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">User</span></li>
 
-        <!-- Staff -->
-        <li class="menu-item {{ Request::is('staff*') ? 'active':'' }}">
-            <a href="{{ route('staff.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Staff</div>
-            </a>
-        </li>
+            <!-- Staff -->
+            <li class="menu-item {{ Request::is('staff*') ? 'active':'' }}">
+                <a href="{{ route('staff.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Basic">Staff</div>
+                </a>
+            </li>
 
-        <!-- Customer -->
-        <li class="menu-item {{ Request::is('customers*') ? 'active':'' }}">
-            <a href="{{ route('customers.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Customer</div>
-            </a>
-        </li>
+            <!-- Customer -->
+            <li class="menu-item {{ Request::is('customers*') ? 'active':'' }}">
+                <a href="{{ route('customers.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Basic">Customer</div>
+                </a>
+            </li>
 
-        <!-- Pages -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
+            <!-- Pages -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
 
-        <!-- Device -->
-        <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div>Device</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Request::is('devices/types*') ? 'active':'' }}">
-                    <a href="{{ route('devices.types.index') }}" class="menu-link">
-                        <div>Type</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('devices/brands*') ? 'active':'' }}">
-                    <a href="{{ route('devices.brands.index') }}" class="menu-link">
-                        <div>Brand</div>
-                    </a>
-                </li>          
-                <li class="menu-item {{ Request::is('devices/series*') ? 'active':'' }}">
-                    <a href="{{ route('devices.series.index') }}" class="menu-link">
-                        <div>Series</div>
-                    </a>
-                </li>          
-            </ul>
-        </li>  
+            <!-- Device -->
+            <li class="menu-item">
+                <a href="#" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-box"></i>
+                    <div>Device</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ Request::is('devices/types*') ? 'active':'' }}">
+                        <a href="{{ route('devices.types.index') }}" class="menu-link">
+                            <div>Type</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Request::is('devices/brands*') ? 'active':'' }}">
+                        <a href="{{ route('devices.brands.index') }}" class="menu-link">
+                            <div>Brand</div>
+                        </a>
+                    </li>          
+                    <li class="menu-item {{ Request::is('devices/series*') ? 'active':'' }}">
+                        <a href="{{ route('devices.series.index') }}" class="menu-link">
+                            <div>Series</div>
+                        </a>
+                    </li>          
+                </ul>
+            </li>  
 
-        <!-- Product -->
-        <li class="menu-item {{ Request::is('products*') ? 'active':'' }}">
-            <a href="{{ route('products.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Product</div>
-            </a>
-        </li>
+            <!-- Product -->
+            <li class="menu-item {{ Request::is('products*') ? 'active':'' }}">
+                <a href="{{ route('products.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Basic">Product</div>
+                </a>
+            </li>
 
-        <!-- Facility -->        
-        <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div>Facility</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Request::is('facilities/types*') ? 'active':'' }}">
-                    <a href="{{ route('facilities.types.index') }}" class="menu-link">
-                        <div>Type</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('facilities/index*') ? 'active':'' }}">
-                    <a href="{{ route('facilities.index.index') }}" class="menu-link">
-                        <div>Index</div>
-                    </a>
-                </li>         
-            </ul>
-        </li> 
+            <!-- Facility -->        
+            <li class="menu-item">
+                <a href="#" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-box"></i>
+                    <div>Facility</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ Request::is('facilities/types*') ? 'active':'' }}">
+                        <a href="{{ route('facilities.types.index') }}" class="menu-link">
+                            <div>Type</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Request::is('facilities/index*') ? 'active':'' }}">
+                        <a href="{{ route('facilities.index.index') }}" class="menu-link">
+                            <div>Index</div>
+                        </a>
+                    </li>         
+                </ul>
+            </li> 
+        @endif
         
         <!-- Pages -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Transaction</span></li>

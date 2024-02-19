@@ -58,7 +58,7 @@
 				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
 				<label for="profile_image" class="d-block mb-3">
           @if ($staff->profile_image)
-            <img src="{{ asset('uploads/staff/' . $staff->profile_image) }}" class="border" width="300" alt="">
+            <img src="{{ asset('uploads/users/' . $staff->profile_image) }}" class="border" width="300" alt="">
           @else
             <img src="{{ asset('assets/img/upload-image.jpg') }}" class="border" width="300" alt="">
           @endif

@@ -94,7 +94,7 @@
 				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
 				<label for="profile_image" class="d-block mb-3">
 					@if ($customer->profile_image)
-						<img src="{{ asset('uploads/users/' . $customer->profile_image) }}" class="edit-customer-preview-img border" width="300" alt="">
+						<img src="{{ asset('uploads/customers/' . $customer->profile_image) }}" class="edit-customer-preview-img border" width="300" alt="">
 					@else
 						<img src="{{ asset('assets/img/upload-image.jpg') }}" class="edit-customer-preview-img border" width="300" alt="">
 					@endif

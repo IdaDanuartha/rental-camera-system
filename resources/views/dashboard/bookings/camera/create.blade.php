@@ -1,14 +1,11 @@
 @extends('layouts.main')
-@section('title', 'Edit Customer Page')
+@section('title', 'Add Transaction Page')
 
 @section('main')
-<form class="card" action="{{ route('customers.update', $customer->id) }}" method="post" enctype="multipart/form-data">
+<form class="card" action="{{ route('bookings.cameras.store') }}" method="post">
   @csrf
-  @method('PUT')
-  <input type="hidden" id="authenticatable_type" name="authenticatable_type" value="App\Models\Customer"/>  
-
   <div class="d-flex justify-content-between align-items-center">
-    <h5 class="card-header">Edit Customer</h5>    
+    <h5 class="card-header">Create New Transaction</h5>    
   </div>  
   <div class="mx-4 mb-4">
     <div class="row">
@@ -19,7 +16,7 @@
           id="name"
           name="name"
           class="form-control"
-          value="{{ $customer->name }}"
+          value="{{ old('name') }}"
           required
           placeholder="Enter name" />
         @error('name')
@@ -33,7 +30,7 @@
           id="username"
           name="user[username]"
           class="form-control"
-          value="{{ $customer->user->username }}"
+          value="{{ old('user.username') }}"
           required
           placeholder="Enter username" />
         @error('user.username')
@@ -47,7 +44,7 @@
           id="email"
           name="user[email]"
           class="form-control"
-          value="{{ $customer->user->email }}"
+          value="{{ old('user.email') }}"
           required
           placeholder="Enter email" />
         @error('user.email')
@@ -61,7 +58,8 @@
           id="phone_number"
           name="phone_number"
           class="form-control"
-          value="{{ $customer->phone_number }}"
+          value="{{ old('phone_number') }}"
+          required
           placeholder="Enter phone number" />
         @error('phone_number')
           <div class="text-danger mt-1">{{ $message }}</div>
@@ -73,7 +71,9 @@
           type="password"
           id="password"
           name="user[password]"
-          class="form-control"                    
+          class="form-control"
+          value="{{ old('user.password') }}"
+          required
           placeholder="Enter password" />
         @error('user.password')
           <div class="text-danger mt-1">{{ $message }}</div>
@@ -82,7 +82,7 @@
 			<div class="col-span-12 flex flex-col mb-3">
 				<p class="text-second mb-1">Account Status</p>
 				<label class="switch">
-					<input type="checkbox" name="user[status]" @checked($customer->user->status->value == 1 ? 'on' : '')>
+					<input type="checkbox" name="user[status]" checked>
 					<span class="slider round"></span>
 				</label>
 
@@ -93,25 +93,21 @@
       <div class="col-3 flex flex-col mb-3">
 				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
 				<label for="profile_image" class="d-block mb-3">
-					@if ($customer->profile_image)
-						<img src="{{ asset('uploads/users/' . $customer->profile_image) }}" class="edit-customer-preview-img border" width="300" alt="">
-					@else
-						<img src="{{ asset('assets/img/upload-image.jpg') }}" class="edit-customer-preview-img border" width="300" alt="">
-					@endif
-        </label>
+					<img src="{{ asset('assets/img/upload-image.jpg') }}" class="create-customer-preview-img border" width="300" alt="">
+				</label>
 				<input
 					type="file"
 					id="profile_image"
 					name="profile_image"
-					class="form-control edit-customer-input"
+					class="form-control create-customer-input"
 					/>
 				@error('profile_image')
 					<div class="text-danger mt-1">{{ $message }}</div>
 				@enderror
 			</div>
 			<div class="col-span-12 flex items-center gap-3 mt-2">
-				<button class="btn btn-primary me-3" type="submit">Save Changes</button>
-				<a href="{{ route('customers.index') }}" class="btn btn-secondary" type="reset">Cancel Edit</a>
+				<button class="btn btn-primary me-3" type="submit">Create Customer</button>
+				<a href="{{ route('bookings.cameras.index') }}" class="btn btn-secondary" type="reset">Cancel Add</a>
 			</div>
     </div>  
   </div>  
@@ -120,6 +116,6 @@
 
 @push('js')
   <script>
-    previewImg("edit-customer-input", "edit-customer-preview-img")
+    previewImg("create-customer-input", "create-customer-preview-img")
   </script>
 @endpush

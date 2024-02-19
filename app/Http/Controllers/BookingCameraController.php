@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Http\Requests\BookingProduct\StoreBookingProduct;
 use App\Models\Booking;
 use App\Repositories\BookingProductRepository;
@@ -23,8 +24,15 @@ class BookingCameraController extends Controller
      */
     public function index()
     {
-        $products = $this->product->findAllPaginate(12);
-        return view("dashboard.bookings.book-camera", compact("products"));
+        if(auth()->user()->role === Role::CUSTOMER) {
+            $products = $this->product->findAllPaginate(12);
+            return view("dashboard.bookings.book-camera", compact("products"));
+        }
+        else {
+            $transactions = $this->bookingProduct->findAllPaginate(10);
+            return view("dashboard.bookings.camera.index", compact("transactions"));
+        }
+
     }
 
     /**

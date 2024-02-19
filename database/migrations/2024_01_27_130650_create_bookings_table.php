@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('total_price');
             $table->integer('total_payment');
             $table->integer('total_return');
+            $table->smallInteger('status')->default(1)->comment("[1: Rented, 2: Returned]");
             $table->timestamps();
         });
     }

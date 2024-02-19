@@ -62,7 +62,6 @@
           name="phone_number"
           class="form-control"
           value="{{ $staff->phone_number }}"
-          required
           placeholder="Enter phone number" />
         @error('phone_number')
           <div class="text-danger mt-1">{{ $message }}</div>
@@ -95,7 +94,7 @@
 				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
 				<label for="profile_image" class="d-block mb-3">
 					@if ($staff->profile_image)
-						<img src="{{ asset('uploads/staff/' . $staff->profile_image) }}" class="edit-staff-preview-img border" width="300" alt="">
+						<img src="{{ asset('uploads/users/' . $staff->profile_image) }}" class="edit-staff-preview-img border" width="300" alt="">
 					@else
 						<img src="{{ asset('assets/img/upload-image.jpg') }}" class="edit-staff-preview-img border" width="300" alt="">
 					@endif

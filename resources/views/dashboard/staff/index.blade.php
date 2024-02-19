@@ -34,7 +34,7 @@
               <span class="fw-medium">{{ $item->user->email }}</span>
             </td>
             <td>
-              <span class="fw-medium">{{ $item->phone_number }}</span>
+              <span class="fw-medium">{{ $item->phone_number ?? "-" }}</span>
             </td>                    
             <td>
               <div class="dropdown">

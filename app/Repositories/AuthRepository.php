@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -28,10 +29,15 @@ class AuthRepository
       $user = $this->user->where("username", $credentials["username"])->first();
       
       if($user->email_verified_at) {
-        return auth()->attempt(Arr::except($credentials, "remember"), Arr::only($credentials, "remember"));
-      } 
+        if(auth()->attempt(Arr::except($credentials, "remember"), Arr::only($credentials, "remember"))) {
+          return true;
+        } else {
+          throw new Exception();
+        }
+      } else {
+        return false;
+      }
 
-      return false;
     } catch (\Exception $e) {
       logger($e->getMessage());
       setcookie("username", "");
