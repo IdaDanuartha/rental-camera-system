@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\Role;
 use App\Http\Requests\BookingProduct\StoreBookingProduct;
+use App\Http\Requests\BookingProduct\UpdateBookingProduct;
 use App\Models\Booking;
 use App\Repositories\BookingProductRepository;
 use App\Repositories\CustomerRepository;
@@ -50,7 +51,9 @@ class BookingCameraController extends Controller
 
     public function edit(Booking $camera)
     {
-        return view("dashboard.bookings.camera.edit", compact("camera"));
+        return response()->json([
+            "camera" => $camera
+        ]);
     }
 
     public function show(Booking $camera)
@@ -76,12 +79,12 @@ class BookingCameraController extends Controller
         }
     }
 
-    public function update(StoreBookingProduct $request, Booking $camera)
+    public function update(UpdateBookingProduct $request, Booking $camera)
     {
         try {
             $update = $this->bookingProduct->update($request->validated(), $camera);
 
-            if($update instanceof Booking) return redirect(route("bookings.cameras.index"))
+            if($update == true) return redirect(route("bookings.cameras.index"))
                                 ->with("success", "Transaction updated successfully");
             throw new Exception;
         } catch (\Exception $e) {  
@@ -96,7 +99,7 @@ class BookingCameraController extends Controller
         try {
             $delete = $this->bookingProduct->delete($camera);
 
-            if($delete instanceof Booking) return redirect(route("bookings.cameras.index"))
+            if($delete == true) return redirect(route("bookings.cameras.index"))
                                 ->with("success", "Transaction deleted successfully");
             throw new Exception;
         } catch (\Exception $e) {  
