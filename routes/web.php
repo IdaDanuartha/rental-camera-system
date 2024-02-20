@@ -16,6 +16,7 @@ use App\Http\Controllers\FacilityTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +97,9 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::delete("/orders/camera/{order}", [OrderController::class, "destroyCamera"])->name("orders.camera.destroy");
     Route::delete("/orders/facility/{order}", [OrderController::class, "destroyFacility"])->name("orders.facility.destroy");
 
+    Route::get("/profile", [ProfileController::class, "index"])->name("profile.index");
+    Route::get("/profile/edit", [ProfileController::class, "edit"])->name("profile.edit");
+    Route::put("/profile", [ProfileController::class, "update"])->name("profile.update");
 });
 Route::fallback(function() {
     return view('errors.404');
