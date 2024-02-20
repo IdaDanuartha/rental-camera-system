@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\Role;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Models\BookingFacility;
@@ -48,7 +49,8 @@ class BookingFacilityRepository
       $request["code"] = strtoupper(Str::random(10));
       
       $facility_carts = $this->facilityCart->with("facility")->where("user_id", auth()->id())->get();
-      $request["user_id"] = auth()->id();
+
+      if(auth()->user()->role === Role::CUSTOMER) $request["user_id"] = auth()->id();
 
       $booking = $this->booking->create($request);
       $request["details"]["booking_id"] = $booking->id;

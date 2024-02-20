@@ -17,6 +17,7 @@
           <th>Total Price</th>
           <th>Total Payment</th>
           <th>Total Return</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -37,6 +38,9 @@
               <span class="fw-medium">Rp @rupiah($item->total_return)</span>
             </td>                     
             <td>
+              <span class="fw-medium">{{ $item->status == 1 ? "Rented" : "Returned" }}</span>
+            </td>                     
+            <td>
               <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                   <i class="bx bx-dots-vertical-rounded"></i>
@@ -45,8 +49,12 @@
                   <a class="dropdown-item" href="{{ route('bookings.facilities.show', $item->id) }}"
                     ><i class="bx bx-file me-1"></i> Detail</a
                   >
-                  <a class="dropdown-item delete-transaction-data" href="#" data-bs-toggle="modal"
-                  data-bs-target="#deleteTransactionModal"
+                  <a class="dropdown-item edit-transaction-facility-data" href="#" data-bs-toggle="modal"
+                  data-bs-target="#editTransactionFacilityModal"
+                    ><i class="bx bx-edit me-1"></i> Edit</a
+                  >
+                  <a class="dropdown-item delete-transaction-facility-data" href="#" data-bs-toggle="modal"
+                  data-bs-target="#deleteTransactionFacilityModal"
                     ><i class="bx bx-trash me-1"></i> Delete</a
                   >
                 </div>

@@ -2,6 +2,9 @@ $(document).ready(function() {
   let status_select2 = $(".edit-status-camera-select2").select2({
     dropdownParent: $("#editTransactionCameraModal")
   })
+  let status_facility_select2 = $(".edit-status-facility-select2").select2({
+    dropdownParent: $("#editTransactionFacilityModal")
+  })
 
   $(".edit-transaction-camera-data").on("click", function() { 
     const transaction_id = $(this).closest('.table-body').find('.transaction_id').val()     
@@ -23,6 +26,36 @@ $(document).ready(function() {
           `)
           } else {
             $("#edit_status_camera").append(`
+              <option value="${index+1}">
+                  ${sts}
+              </option>
+          `)
+          }
+        });
+      }
+    })
+  })
+
+  $(".edit-transaction-facility-data").on("click", function() { 
+    const transaction_id = $(this).closest('.table-body').find('.transaction_id').val()     
+    $.ajax({
+    type: "GET",
+      url: `/booking/facilities/${transaction_id}/edit`,
+      dataType: "json",
+      success: function({facility}){    
+        console.log(facility)
+        $("#edit_transaction_facility_form").attr("action", `/booking/facilities/${facility.id}`)                        
+        const status = ["Rented", "Returned"]
+
+        status.forEach((sts, index) => {          
+          if(index+1 == facility.status) {
+            $("#edit_status_facility").append(`
+              <option value="${index+1}" selected>
+                  ${sts}
+              </option>
+          `)
+          } else {
+            $("#edit_status_facility").append(`
               <option value="${index+1}">
                   ${sts}
               </option>
