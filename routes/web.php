@@ -93,8 +93,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::middleware("is_customer")->controller(OrderController::class)->group(function() {
         Route::get("/orders", "index")->name("orders.index");
-        Route::get("/orders/camera/{order}", "showCamera")->name("orders.camera.show");
-        Route::get("/orders/facility/{order}", "showFacility")->name("orders.facility.show");
+        Route::get("/orders/camera/{camera}", "showCamera")->name("orders.camera.show");
+        Route::get("/orders/facility/{facility}", "showFacility")->name("orders.facility.show");
         Route::delete("/orders/camera/{order}", "destroyCamera")->name("orders.camera.destroy");
         Route::delete("/orders/facility/{order}", "destroyFacility")->name("orders.facility.destroy");
     });

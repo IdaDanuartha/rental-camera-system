@@ -2,8 +2,7 @@
 @section('title', 'Detail Transaction Page')
 
 @section('main')
-<form class="row" action="{{ route('bookings.cameras.store') }}" method="post">
-  @csrf
+<form class="row">
   <div class="col-lg-8 col-12 mb-lg-0 mb-3">
     <div class="card">
       <div class="d-flex justify-content-between align-items-center">
@@ -16,14 +15,14 @@
               <label for="" class="text-second">Items</label>
             </div>
           </div>
-          <div class="col-span-12 md:col-span-8 flex mt-2 mb-4 flex-col" id="product_carts">
-            @foreach ($camera->bookingDetails as $item)
-              <div class="product-cart">
-                <input type="hidden" class="product_cart_id" value="${cart.id}" />
+          <div class="col-span-12 md:col-span-8 flex mt-2 mb-4 flex-col" id="facility_carts">
+            @foreach ($facility->bookingFacilityDetails as $item)
+              <div class="facility-cart">
+                <input type="hidden" class="facility_cart_id" value="${cart.id}" />
                 <div class="d-flex align-items-center">
-                    <img src="/uploads/products/{{ $item->product->productImages[0]->image }}" class="rounded me-2" width="250" alt="">
+                    <img src="/uploads/facilities/{{ $item->facility->facilityImages[0]->image }}" class="rounded me-2" width="250" alt="">
                     <div class="ms-3 flex flex-col">
-                        <h5 class="">{{ $item->product->name }}</h5>
+                        <h5 class="">{{ $item->facility->name }}</h5>
                         <div class="d-flex align-items-center">
                             <p>Rp @rupiah($item->rental_price)</p>
                             <p class="mx-2">x</p>
@@ -57,14 +56,16 @@
             type="text"
             class="form-control"
             readonly
-            value="{{ $camera->user->authenticatable->name }}" readonly/>
+            value="{{ $facility->user->authenticatable->name }}"
+            readonly />
           </div>
           <div class="col-12 mb-3">
             <label for="total_payment" class="form-label">Pay</label>
             <input
               type="text"
               class="form-control"
-              value="Rp @rupiah($camera->total_payment)" readonly />
+              value="Rp @rupiah($facility->total_payment)" 
+              readonly />
           </div>
           <div class="col-12 mb-3">
             <label for="" class="form-label">Total</label>
@@ -72,24 +73,27 @@
             <input
               type="text"
               class="form-control"
-              value="Rp @rupiah($camera->total_price)" readonly />
+              value="Rp @rupiah($facility->total_price)" 
+              readonly />
           </div>
           <div class="col-12 mb-3">
             <label for="total-return" class="form-label">Return</label>
               <input
               type="text"
               class="form-control"
-              value="Rp @rupiah($camera->total_return)" readonly />
+              value="Rp @rupiah($facility->total_return)" 
+              readonly />
           </div>
           <div class="col-12 mb-3">
             <label for="total-return" class="form-label">Status</label>
               <input
               type="text"
               class="form-control"
-              value="{{ $camera->status == 1 ? "Rented" : "Returned" }}" readonly />
+              value="{{ $facility->status == 1 ? "Rented" : "Returned" }}" 
+              readonly />
           </div>
           <div class="col-span-12 flex items-center gap-3 mt-2">
-            <a href="{{ route('bookings.cameras.index') }}" class="btn btn-secondary" type="reset">Back</a>
+            <a href="{{ route('orders.index') }}" class="btn btn-secondary" type="reset">Back</a>
           </div>
         </div>  
       </div> 

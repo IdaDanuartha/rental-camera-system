@@ -89,7 +89,7 @@
               value="{{ $camera->status == 1 ? "Rented" : "Returned" }}" readonly />
           </div>
           <div class="col-span-12 flex items-center gap-3 mt-2">
-            <a href="{{ route('bookings.cameras.index') }}" class="btn btn-secondary" type="reset">Back</a>
+            <a href="{{ route('orders.index') }}" class="btn btn-secondary" type="reset">Back</a>
           </div>
         </div>  
       </div> 

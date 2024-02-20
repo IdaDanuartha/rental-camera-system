@@ -25,16 +25,14 @@ class OrderController extends Controller
         return view("dashboard.orders.index", compact("camera_orders", "facility_orders"));
     }
 
-    public function showCamera(Booking $order)
+    public function showCamera(Booking $camera)
     {                   
-        $order = $this->bookingProduct->findById($order);                                
-        return view("dashboard.orders.detail", compact("order"));
+        return view("dashboard.orders.detail-camera", compact("camera"));
     }
 
-    public function showFacility(BookingFacility $order)
+    public function showFacility(BookingFacility $facility)
     {                   
-        $order = $this->bookingFacility->findById($order);                                
-        return view("dashboard.orders.detail", compact("order"));
+        return view("dashboard.orders.detail-facility", compact("facility"));
     }
 
     public function destroyCamera(Booking $order)

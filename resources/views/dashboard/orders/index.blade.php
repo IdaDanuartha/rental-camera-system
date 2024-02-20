@@ -129,7 +129,7 @@
 
 @include('partials.modal-order')
 @endsection
-r
+
 @push('js')
 <script src="{{ asset('assets/js/custom/order.js') }}"></script>
 @endpush
