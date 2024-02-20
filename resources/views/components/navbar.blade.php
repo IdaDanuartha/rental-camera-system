@@ -47,31 +47,22 @@ id="layout-navbar" style="background: transparent !important; box-shadow: none !
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                     </a>
-                    </li>
+                </li>
+                @if (auth()->user()->isCustomer())
                     <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">My Profile</span>
+                        <a class="dropdown-item" href="{{ route('orders.index') }}">
+                            <i class='bx bx-shopping-bag me-2'></i>
+                            <span class="align-middle">My Orders</span>
                         </a>
                     </li>
-                    @if (auth()->user()->isCustomer())
-                        <li>
-                            <a class="dropdown-item" href="{{ route('orders.index') }}">
-                                <i class='bx bx-shopping-bag me-2'></i>
-                                <span class="align-middle">My Orders</span>
-                            </a>
-                        </li>
-                    @endif
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="dropdown-item">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Log Out</span>
-                        </button>
-                    </form>
+                @endif
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                    </button>
+                </form>
                 </ul>
             </li>
             <!--/ User -->

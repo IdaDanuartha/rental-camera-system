@@ -33,7 +33,7 @@ class ProductCartRepository
   {
     DB::beginTransaction();
     try {        
-      $product_cart = $this->productCart->where("product_id", $product_id)->first();
+      $product_cart = $this->productCart->where("product_id", $product_id)->where("user_id", auth()->id())->first();
 
       if(!$product_cart) {
         $productCart = $this->productCart->create([

@@ -91,11 +91,13 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::resource('booking/cameras', BookingCameraController::class, ['as' => 'bookings']);
     Route::resource('booking/facilities', BookingFacilityController::class, ['as' => 'bookings']);
 
-    Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
-    Route::get("/orders/camera/{order}", [OrderController::class, "showCamera"])->name("orders.camera.show");
-    Route::get("/orders/facility/{order}", [OrderController::class, "showFacility"])->name("orders.facility.show");
-    Route::delete("/orders/camera/{order}", [OrderController::class, "destroyCamera"])->name("orders.camera.destroy");
-    Route::delete("/orders/facility/{order}", [OrderController::class, "destroyFacility"])->name("orders.facility.destroy");
+    Route::middleware("is_customer")->controller(OrderController::class)->group(function() {
+        Route::get("/orders", "index")->name("orders.index");
+        Route::get("/orders/camera/{order}", "showCamera")->name("orders.camera.show");
+        Route::get("/orders/facility/{order}", "showFacility")->name("orders.facility.show");
+        Route::delete("/orders/camera/{order}", "destroyCamera")->name("orders.camera.destroy");
+        Route::delete("/orders/facility/{order}", "destroyFacility")->name("orders.facility.destroy");
+    });
 
     Route::get("/profile", [ProfileController::class, "index"])->name("profile.index");
     Route::get("/profile/edit", [ProfileController::class, "edit"])->name("profile.edit");

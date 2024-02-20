@@ -2,120 +2,112 @@
 @section('title', 'Add Transaction Page')
 
 @section('main')
-<form class="card" action="{{ route('bookings.cameras.store') }}" method="post">
+<form class="row" action="{{ route('bookings.cameras.store') }}" method="post">
   @csrf
-  <div class="d-flex justify-content-between align-items-center">
-    <h5 class="card-header">Create New Transaction</h5>    
-  </div>  
-  <div class="mx-4 mb-4">
-    <div class="row">
-      <div class="col-6 mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          class="form-control"
-          value="{{ old('name') }}"
-          required
-          placeholder="Enter name" />
-        @error('name')
-          <div class="text-danger mt-1">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="col-6 mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="user[username]"
-          class="form-control"
-          value="{{ old('user.username') }}"
-          required
-          placeholder="Enter username" />
-        @error('user.username')
-          <div class="text-danger mt-1">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="col-6 mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="user[email]"
-          class="form-control"
-          value="{{ old('user.email') }}"
-          required
-          placeholder="Enter email" />
-        @error('user.email')
-          <div class="text-danger mt-1">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="col-6 mb-3">
-        <label for="phone_number" class="form-label">Phone Number</label>
-        <input
-          type="text"
-          id="phone_number"
-          name="phone_number"
-          class="form-control"
-          value="{{ old('phone_number') }}"
-          required
-          placeholder="Enter phone number" />
-        @error('phone_number')
-          <div class="text-danger mt-1">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="col-6 mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="user[password]"
-          class="form-control"
-          value="{{ old('user.password') }}"
-          required
-          placeholder="Enter password" />
-        @error('user.password')
-          <div class="text-danger mt-1">{{ $message }}</div>
-        @enderror
-      </div>
-			<div class="col-span-12 flex flex-col mb-3">
-				<p class="text-second mb-1">Account Status</p>
-				<label class="switch">
-					<input type="checkbox" name="user[status]" checked>
-					<span class="slider round"></span>
-				</label>
-
-				@error('user.status')
-					<div class="text-danger mt-1">{{ $message }}</div>
-				@enderror
-			</div>
-      <div class="col-3 flex flex-col mb-3">
-				<label for="profile_image" class="text-second mb-1">Profile Photo</label>
-				<label for="profile_image" class="d-block mb-3">
-					<img src="{{ asset('assets/img/upload-image.jpg') }}" class="create-customer-preview-img border" width="300" alt="">
-				</label>
-				<input
-					type="file"
-					id="profile_image"
-					name="profile_image"
-					class="form-control create-customer-input"
-					/>
-				@error('profile_image')
-					<div class="text-danger mt-1">{{ $message }}</div>
-				@enderror
-			</div>
-			<div class="col-span-12 flex items-center gap-3 mt-2">
-				<button class="btn btn-primary me-3" type="submit">Create Customer</button>
-				<a href="{{ route('bookings.cameras.index') }}" class="btn btn-secondary" type="reset">Cancel Add</a>
-			</div>
-    </div>  
-  </div>  
+  <div class="col-lg-8 col-12 mb-lg-0 mb-3">
+    <div class="card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="card-header">Create New Transaction</h5>    
+      </div>  
+      <div class="mx-4 mb-4">
+        <div class="row">
+          <div class="col-span-12 md:col-span-8 flex mt-2 flex-col">
+            <div class="flex items-center mb-2">
+              <label for="" class="text-second">Add Item</label>
+              <button data-bs-toggle="modal"
+              data-bs-target="#showProductModal" type="button" class="p-1 btn">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-8 flex mt-2 mb-4 flex-col" id="product_carts">
+            
+          </div>
+          {{-- <div class="col-span-12 flex items-center gap-3 mt-2">
+            <a href="{{ route('bookings.cameras.index') }}" class="btn btn-secondary" type="reset">Cancel Add</a>
+          </div> --}}
+        </div>  
+      </div> 
+    </div> 
+  </div>
+  <div class="col-lg-4 col-12">
+    <div class="card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="card-header">Details</h5>    
+      </div>  
+      <div class="mx-4 mb-4">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label for="user_id" class="form-label">Customer</label>
+            <select required class="customer-select2 form-control" name="user_id">
+              <option value="">Select Customer</option>
+              @foreach ($customers as $item)
+                @if (old('user_id') === $item->user->id)
+                  <option value="{{ $item->user->id }}" selected>{{ $item->name }}</option>
+                @else
+                  <option value="{{ $item->user->id }}">{{ $item->name }}</option>  
+                @endif
+              @endforeach
+            </select>
+            @error('user_id')
+              <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="total_payment" class="form-label">Pay</label>
+            <input
+              type="text"
+              id="total_payment"
+              name="total_payment"
+              class="form-control total-pay-input"
+              value="{{ old('total_payment') }}"
+              required
+              placeholder="Enter total payment" />
+            @error('total_payment')
+              <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="" class="form-label">Total</label>
+            <input type="hidden" name="total_price" id="total-price">
+            <div
+              id="total_price"
+              class="form-control total-cart-count"></div>
+            @error('total_price')
+              <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="total-return" class="form-label">Return</label>
+            <div
+              class="form-control total-return-count"></div>
+            <input
+              type="hidden"
+              id="total-return"
+              name="total_return"
+              class="form-control"
+              required
+              readonly
+              placeholder="Rp 0,00" />
+            @error('total_return')
+              <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="col-span-12 d-block mt-2">
+            <button class="btn btn-primary" style="width: 100%" type="submit">Checkout</button>
+          </div>
+        </div>  
+      </div> 
+    </div> 
+</div>
 </form>
+
+@include('partials.modal-book-product-admin')
 @endsection
 
 @push('js')
-  <script>
-    previewImg("create-customer-input", "create-customer-preview-img")
-  </script>
+<script src="{{ asset('assets/js/custom/book-product-admin.js') }}"></script>
+<script>
+  let customer = $(".customer-select2").select2()
+</script>
 @endpush

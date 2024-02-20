@@ -22,6 +22,7 @@ class StoreBookingProduct extends FormRequest
     public function rules(): array
     {
         return [
+            "user_id" => "nullable", 
             "total_price" => "required|numeric",
             "total_payment" => "required|numeric",
             "total_return" => "required|numeric",
