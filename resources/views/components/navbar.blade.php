@@ -1,5 +1,5 @@
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center"
-id="layout-navbar" style="background: transparent !important; box-shadow: none !important;">
+id="layout-navbar" style="background: #f5f5f9 !important; box-shadow: none !important;">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
             <i class="bx bx-menu bx-sm"></i>
