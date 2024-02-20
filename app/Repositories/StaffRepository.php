@@ -39,7 +39,7 @@ class StaffRepository
     DB::beginTransaction();
     try {  
       if ($request["profile_image"]) {         
-        $filename = $this->uploadFile->uploadSingleFile($request['profile_image'], "staff");
+        $filename = $this->uploadFile->uploadSingleFile($request['profile_image'], "users");
         $request['profile_image'] = $filename;
       }  
 
@@ -66,11 +66,11 @@ class StaffRepository
     DB::beginTransaction();    
     try {  
       if (Arr::has($request, 'profile_image') && Arr::get($request, 'profile_image')) {
-        $this->uploadFile->deleteExistFile("staff/$staff->profile_image");
+        $this->uploadFile->deleteExistFile("users/$staff->profile_image");
 
         $image = Arr::get($request, 'profile_image');
 
-        $filename = $this->uploadFile->uploadSingleFile($image, "staff");
+        $filename = $this->uploadFile->uploadSingleFile($image, "users");
         $request['profile_image'] = $filename;
       }  
 
@@ -97,7 +97,7 @@ class StaffRepository
   {
     DB::beginTransaction();
     try {
-      $this->uploadFile->deleteExistFile("staff/$staff->profile_image");
+      $this->uploadFile->deleteExistFile("users/$staff->profile_image");
 
       $staff->user?->deleteOrFail();
       $delete_staff = $staff->deleteOrFail();
