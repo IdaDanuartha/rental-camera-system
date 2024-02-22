@@ -52,7 +52,7 @@ id="layout-navbar" style="background: #f5f5f9 !important; box-shadow: none !impo
                     <li>
                         <a class="dropdown-item" href="{{ route('orders.index') }}">
                             <i class='bx bx-shopping-bag me-2'></i>
-                            <span class="align-middle">My Orders</span>
+                            <span class="align-middle">My Orders</span> 
                         </a>
                     </li>
                 @endif
