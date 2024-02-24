@@ -57,7 +57,7 @@ id="layout-navbar" style="background: #f5f5f9 !important; box-shadow: none !impo
                     </li>
                 @endif
                 <form action="{{ route('logout') }}" method="POST">
-                    @csrf
+                    @csrf 
                     <button type="submit" class="dropdown-item">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
