@@ -66,6 +66,7 @@ class BookingProductRepository
       foreach($product_carts as $cart) {
         $cart->delete();
       }
+      
     } catch (\Exception $e) {  
       logger($e->getMessage());
       DB::rollBack();
