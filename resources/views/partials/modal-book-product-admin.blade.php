@@ -19,14 +19,16 @@
                             <span class="badge bg-label-primary">{{ $item->deviceSeries->name }}</span>
                             <span class="badge bg-label-warning">{{ $item->deviceSeries->deviceBrand->deviceType->name }}</span>
                         </div>
-                        <img class="card-img-top cursor-pointer" data-bs-toggle="modal" data-bs-target="#detailProductModal" src="{{ asset("uploads/products/" . $item->productImages[0]->image) }}" alt="Card image cap" />
-                        <div class="card-body p-2 mt-4">
-                            <h5 class="card-title">{{ $item->name }}</h5>
-                            <p class="card-text">Rp. @rupiah($item->rental_price)/day</p>
-                            <div class="block">
-                                <button class="btn btn-primary add-to-cart-btn" type="button" style="width: 100%">Add</button>
-                            </div>
-                        </div>
+                        @if (count($item->productImages))
+                          <img class="card-img-top cursor-pointer" data-bs-toggle="modal" data-bs-target="#detailProductModal" src="{{ asset("uploads/products/" . $item->productImages[0]->image) }}" alt="Card image cap" />
+                        @endif
+                          <div class="card-body p-2 mt-4">
+                              <h5 class="card-title">{{ $item->name }}</h5>
+                              <p class="card-text">Rp. @rupiah($item->rental_price)/day</p>
+                              <div class="block">
+                                  <button class="btn btn-primary add-to-cart-btn" type="button" style="width: 100%">Add</button>
+                              </div>
+                          </div>
                         </div>
                     </div>
                 @endforeach

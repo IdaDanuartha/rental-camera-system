@@ -24,7 +24,7 @@ $(document).ready(function() {
             <div class="facility-cart">
               <input type="hidden" class="facility_cart_id" value="${cart.id}" />
               <div class="d-flex">
-                  <img src="/uploads/facilities/${cart.facility.facility_images[0].image}" class="rounded" width="80" alt="">
+              ${cart.facility.facility_images.length ? '<img src="/uploads/facilities/${cart.facility.facility_images[0].image}" class="rounded" width="80" alt="">' : ""}
                   <div class="ms-3 flex flex-col">
                       <h5 class="">${cart.facility.name}</h5>
                       <div class="d-flex align-items-center">

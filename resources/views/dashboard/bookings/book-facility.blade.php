@@ -31,7 +31,9 @@
             <div class="position-absolute" style="top: 12px; left: 12px;">
                 <span class="badge bg-label-primary">{{ $item->facilityType->name }}</span>
             </div>
+            @if (count($item->facilityImages))
             <img class="card-img-top cursor-pointer" data-bs-toggle="modal" data-bs-target="#detailFacilityModal" src="{{ asset("uploads/facilities/" . $item->facilityImages[0]->image) }}" alt="Card image cap" />
+            @endif
             <div class="card-body p-2 mt-4">
                 <h5 class="card-title">{{ $item->name }}</h5>
                 <p class="card-text">Rp. @rupiah($item->rental_price)/day</p>

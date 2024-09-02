@@ -33,7 +33,7 @@ class FacilityCartRepository
   {
     DB::beginTransaction();
     try {        
-      $facility_cart = $this->facilityCart->where("facility_id", $facility_id)->first();
+      $facility_cart = $this->facilityCart->where('user_id', auth()->id())->where("facility_id", $facility_id)->first();
 
       if(!$facility_cart) {
         $facilityCart = $this->facilityCart->create([

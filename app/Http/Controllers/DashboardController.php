@@ -36,9 +36,12 @@ class DashboardController extends Controller
             ->groupBy(DB::raw("Month(created_at)"))
             ->pluck("month");
 
-        $income_yearly = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,);
+        $income_yearly = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         foreach ($months as $index => $month) {
-            $income_yearly[$month - 1] = $bookingData[$index] + $bookingFacilityData[$index];
+            $booking = count($bookingData) ? $bookingData[$index] : 0;
+            $facility = count($bookingFacilityData) ? $bookingFacilityData[$index] : 0;
+
+            $income_yearly[$month - 1] = $booking + $facility;
         }
 
         $staff_count = 0;
