@@ -93,7 +93,7 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
 
             <!-- Device -->
-            <li class="menu-item">
+            <li class="menu-item {{ Request::is('devices*') ? 'open':'' }}">
                 <a href="#" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-box"></i>
                     <div>Device</div>
@@ -126,7 +126,7 @@
             </li>
 
             <!-- Facility -->        
-            <li class="menu-item">
+            <li class="menu-item {{ Request::is('facilities*') ? 'open':'' }}">
                 <a href="#" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-box"></i>
                     <div>Facility</div>
