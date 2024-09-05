@@ -65,7 +65,7 @@ class ProductRepository
     return $product;
   }
 
-  public function update($request, Product $product): bool
+  public function update($request, Product $product): bool|Exception
   {
     DB::beginTransaction();    
     try {  
